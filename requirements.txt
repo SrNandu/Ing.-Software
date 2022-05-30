@@ -1,0 +1,4 @@
+pygame
+flake8
+pytest
+pytest-cov
