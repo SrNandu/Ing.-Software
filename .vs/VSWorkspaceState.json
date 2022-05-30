@@ -3,5 +3,6 @@
     "",
     "\\.circleci"
   ],
+  "SelectedNode": "\\.circleci\\config.yml",
   "PreviewInSolutionExplorer": false
 }
