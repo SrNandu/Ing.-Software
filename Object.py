@@ -21,4 +21,3 @@ class Object:
     def setVelocidad(self, velx, vely):
         self._velocidadX = velx
         self._velocidadY = vely
-        
