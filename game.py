@@ -1,10 +1,10 @@
 from ast import Import
-from Object import Object 
+from gameObject import gameObject 
 import pygame
 
 class Game:
 
-    __pajaro = Object(pygame.image.load("Sprites/bird.png"))
+    __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __input = None
