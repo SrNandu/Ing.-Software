@@ -25,8 +25,7 @@ class gameObject:
     def getSprite(self):
         return self._sprite
 
-    def getPosicionX(self):
-        return self._posicionX
+    def getPosicion(self):
+        return (self._posicionX, self._posicionY)
     
-    def getPosicionY(self):
-        return self._posicionY
+
