@@ -10,10 +10,10 @@ class Object:
     
     _sprite = None
     
-    def __init__(self,sprite):
+    def __init__(self, sprite):
         self._sprite = sprite
     
-    def mover(self,x,y):
+    def mover(self, x, y):
         self._posicionX = x
         self._posicionY = y
 
@@ -22,7 +22,7 @@ class Object:
         self._posicionX += self._velocidadX * deltaTime
         self._posicionY += self._velocidadY * deltaTime
 
-    def setVelocidad(self,velx,vely):
+    def setVelocidad(self, velx, vely):
         self._velocidadX = velx
         self._velocidadY = vely
         
