@@ -1,6 +1,3 @@
-from abc import abstractmethod
-
-
 class Object:
     
     _posicionX = 0
@@ -17,7 +14,6 @@ class Object:
         self._posicionX = x
         self._posicionY = y
 
-    
     def actualizar(self, deltaTime):
         self._posicionX += self._velocidadX * deltaTime
         self._posicionY += self._velocidadY * deltaTime
