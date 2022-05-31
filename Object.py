@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class Object :
+class Object:
     
     _posicionX = 0
     _posicionY = 0
