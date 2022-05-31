@@ -8,6 +8,6 @@ class vista:
     
     __ventana = pygame.display.set_mode((ANCHO_VENTANA,ALTO_VENTANA))
 
-    def renderizar(self, gameObject:gameObject):
+    def renderizar(self, gameObject: gameObject):
         self.__ventana.blit(gameObject.getSprite(), (gameObject.getPosicionX(), gameObject.getPosicionY()))
         
