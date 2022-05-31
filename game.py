@@ -43,6 +43,7 @@ class game:
                 self.__puntaje += 1
 
             self.__ventana.renderizar(self.__pajaro)
+            self.__ventana.actualizarVentana()
             
     def __colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
