@@ -9,6 +9,7 @@ class game:
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __input = None
+    __ventana = vista()
 
     __puntaje = 0
 
@@ -35,11 +36,13 @@ class game:
     def loop(self):
         while True:
 
-            if(self.__colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
+            if(game.__colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 pass
 
-            if(self.__gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
+            if(game.__gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 self.__puntaje += 1
+
+            self.__ventana.renderizar(self.__pajaro)
             
     def __colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
