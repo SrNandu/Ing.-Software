@@ -8,6 +8,6 @@ class vista:
     
     ventana = pygame.display.set_mode((__anchoVentana,__altoVentana))
 
-    def renderizar(self):
-        window.blit(pygame.image.load("Sprites/background.png"), (0, 0))
-        window.blit(pygame.image.load("Sprites/bird.png"), (120, 250))
+    def renderizar(self, gameObject):
+        window.blit(gameObject.getSprite(), (gameObject.getPosicionx(), gameObject.getPosicionY()))
+        

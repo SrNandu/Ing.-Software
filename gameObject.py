@@ -21,3 +21,12 @@ class gameObject:
     def setVelocidad(self, velx, vely):
         self._velocidadX = velx
         self._velocidadY = vely
+
+    def getSprite(self):
+        return self._sprite
+
+    def getPosicionX(self):
+        return self._posicionX
+    
+    def getPosicionY(self):
+        return self._posicionY
