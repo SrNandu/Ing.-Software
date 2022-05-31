@@ -2,6 +2,7 @@ from ast import Import
 from gameObject import gameObject 
 from vista import vista
 import pygame
+import sys
 
 class game:
 
@@ -10,6 +11,7 @@ class game:
     __tuberiasAbajo = []
     __input = None
     __ventana = vista()
+    __reloj = pygame.time.Clock()
 
     __puntaje = 0
 
@@ -36,14 +38,22 @@ class game:
     def loop(self):
         while True:
 
+            #Chequear si se cerro la ventana
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()			    
+
             if(game.__colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 pass
 
             if(game.__gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 self.__puntaje += 1
 
+            #Actualizar vista
             self.__ventana.renderizar(self.__pajaro)
             self.__ventana.actualizarVentana()
+            self.__reloj.tick(30)
             
     def __colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
