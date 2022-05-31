@@ -3,11 +3,11 @@ import pygame
 
 
 class vista:
-    __anchoVentana = 600
-    __altoVentana = 500
+    ANCHO_VENTANA = 600
+    ALTO_VENTANA = 500
     
-    ventana = pygame.display.set_mode((__anchoVentana,__altoVentana))
+    __ventana = pygame.display.set_mode((ANCHO_VENTANA,ALTO_VENTANA))
 
     def renderizar(self, gameObject):
-        window.blit(gameObject.getSprite(), (gameObject.getPosicionx(), gameObject.getPosicionY()))
+        self.__ventana.blit(gameObject.getSprite(), (gameObject.getPosicionx(), gameObject.getPosicionY()))
         
