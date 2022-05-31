@@ -10,4 +10,9 @@ class vista:
 
     def renderizar(self, gameObject: gameObject):
         self.__ventana.blit(gameObject.getSprite(), gameObject.getPosicion())
+
+    def actualizarVentana(self):
+        pygame.display.update()
+
+
         
