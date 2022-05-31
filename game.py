@@ -3,7 +3,7 @@ from gameObject import gameObject
 from vista import vista
 import pygame
 
-class Game:
+class game:
 
     __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
     __tuberiasArriba = []
@@ -12,10 +12,11 @@ class Game:
 
     __puntaje = 0
 
-    def __init__(self,input):
+    def __init__(self, input):
         self.__input = input
+        self.__initTuberias()
 
-    def initTuberias(self):
+    def __initTuberias(self):
         for i in range(10):
             espacio = 30
 
@@ -34,14 +35,14 @@ class Game:
     def loop(self):
         while True:
 
-            if(self.colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
+            if(self.__colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 pass
 
-            if(self.gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
+            if(self.__gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 self.__puntaje += 1
             
-    def colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
+    def __colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
 
-    def gol(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
+    def __gol(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
