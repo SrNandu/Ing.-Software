@@ -21,4 +21,8 @@ class Object :
     def actualizar(self, deltaTime):
         self._posicionX += self._velocidadX * deltaTime
         self._posicionY += self._velocidadY * deltaTime
+
+    def setVelocidad(self,velx,vely):
+        self._velocidadX = velx
+        self._velocidadY = vely
         
