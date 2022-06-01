@@ -1,5 +1,5 @@
 import pygame
-from gameObject import gameObject
+from Source.gameObject import gameObject
 
 
 class test_gameObject:
