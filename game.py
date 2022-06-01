@@ -10,7 +10,7 @@ class game:
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __input = None
-    __ventana = vista(1280,720)
+    __ventana = vista(800,640)
     __reloj = pygame.time.Clock()
 
     __puntaje = 0
@@ -27,12 +27,12 @@ class game:
             tuberiaArriba = gameObject(pygame.image.load("Sprites/pipe.png"))
 
             alto = tuberiaArriba.getSprite().get_size()[1]
-            tuberiaArriba.mover(20 * i, self.__ventana.getAlto() / 2 + espacio)
+            tuberiaArriba.mover(self.__ventana.getAncho() / 2 + 100 * i, self.__ventana.getAlto() / 2 + espacio)
 
             self.__tuberiasArriba.append(tuberiaArriba)
 
             tuberiaAbajo = gameObject(pygame.image.load("Sprites/pipe.png"))
-            tuberiaAbajo.mover(20 * i, self.__ventana.getAlto() / 2 - espacio - alto)
+            tuberiaAbajo.mover(self.__ventana.getAncho() / 2 + 100 * i, self.__ventana.getAlto() / 2 - espacio - alto)
 
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
@@ -55,13 +55,27 @@ class game:
             if(game.__gol(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 self.__puntaje += 1
 
-            #Actualizar vista
-            self.__ventana.renderizar(self.__pajaro)
-            self.__ventana.actualizarVentana()
-            self.__reloj.tick(30)
+            self.__dibujar()
             
     def __colisiona(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
 
     def __gol(tuberiasArriba : list[gameObject], tuberiasAbajo: list[gameObject], pajaro : gameObject):
         return False
+
+    def __dibujar(self):
+
+        #Renderizar pajaro
+        self.__ventana.renderizar(self.__pajaro)
+
+        #Renderizar tuberias inferiores
+        for i in range(len(self.__tuberiasAbajo)):
+            self.__ventana.renderizar(self.__tuberiasAbajo[i])
+
+        #Renderizar tuberias superiores
+        for i in range(len(self.__tuberiasArriba)):
+            self.__ventana.renderizar(self.__tuberiasArriba[i])
+
+        #Actualizar vista
+        self.__ventana.actualizarVentana()
+        self.__reloj.tick(30)
