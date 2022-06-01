@@ -2,6 +2,10 @@ from gameObject import gameObject
 
 class tuberia(gameObject):
 
+    def __init__(self, sprite):
+        self._velocidadX = -10
+        super().__init__(sprite)
+
     def posicionar(self, anchoVentana : int, altoVentana : int , i : int, arriba : bool):
         espacio = 30
 

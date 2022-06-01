@@ -38,13 +38,20 @@ class game:
         
     def loop(self):
         while True:
-
             #Deberia ir en input
             #Chequear si se cerro la ventana
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()			    
+                    sys.exit()			
+
+            #Actualizar tuberias inferiores
+            for i in range(len(self.__tuberiasAbajo)):
+                self.__tuberiasAbajo[i].actualizar(0.016)
+
+            #Actualizar tuberias superiores
+            for i in range(len(self.__tuberiasArriba)):
+                self.__tuberiasArriba[i].actualizar(0.016) 
 
             if(game.__colisiona(self.__tuberiasArriba,self.__tuberiasAbajo,self.__pajaro)):
                 pass
