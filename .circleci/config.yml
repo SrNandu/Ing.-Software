@@ -27,7 +27,7 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-results
-            pytest Source/Tests --cov --junitxml=test-results/junit.xml
+            pytest Source/Tests/ --cov --junitxml=test-results/junit.xml
       # Step 4: save test results
       - store_test_results:
           path: test-results
