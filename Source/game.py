@@ -1,4 +1,5 @@
 from ast import Import
+from Source.subject import subject
 from colisiones import colisiones
 from gameObject import gameObject
 from tuberia import tuberia
@@ -7,7 +8,7 @@ import pygame
 import sys
 
 
-class game:
+class game(object):
 
     __fondo = gameObject(pygame.image.load("Sprites/background.jpg"))
     __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
@@ -35,7 +36,7 @@ class game:
             #Posicionar tuberias
             tuberiaArriba.posicionarConRespectoAbajo(
                 self.__vista.getAncho() / 2, self.__vista.getAlto(), i, tuberiaAbajo)
-                
+
             self.__tuberiasArriba.append(tuberiaArriba)
             self.__tuberiasAbajo.append(tuberiaAbajo)
 

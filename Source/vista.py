@@ -1,9 +1,10 @@
 import pygame
+from Source.observer import observer
 
 from gameObject import gameObject
 
 
-class vista:
+class vista(observer):
     __ancho = 0
     __alto = 0
     __ventana = None
