@@ -69,9 +69,6 @@ class game:
 
             self.__dibujar()
 
-    def __gol(tuberiasArriba: list[gameObject], tuberiasAbajo: list[gameObject], pajaro: gameObject):
-        return False
-
     def __dibujar(self):
 
         # Renderizar fondo
