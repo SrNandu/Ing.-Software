@@ -1,4 +1,5 @@
 from ast import Import
+from colisiones import colisiones
 from gameObject import gameObject
 from tuberia import tuberia
 from vista import vista
@@ -60,16 +61,13 @@ class game:
             for i in range(len(self.__tuberiasArriba)):
                 self.__tuberiasArriba[i].actualizar(deltaTime)
 
-            if(game.__colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
+            if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 pass
 
             if(game.__gol(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 self.__puntaje += 1
 
             self.__dibujar()
-
-    def __colisiona(tuberiasArriba: list[gameObject], tuberiasAbajo: list[gameObject], pajaro: gameObject):
-        return False
 
     def __gol(tuberiasArriba: list[gameObject], tuberiasAbajo: list[gameObject], pajaro: gameObject):
         return False
