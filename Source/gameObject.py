@@ -1,3 +1,6 @@
+from pygame import Surface
+
+
 class gameObject:
 
     _posicionX = 0
@@ -22,8 +25,8 @@ class gameObject:
         self._velocidadX = velx
         self._velocidadY = vely
 
-    def getSprite(self):
+    def getSprite(self) -> Surface:
         return self._sprite
 
-    def getPosicion(self):
+    def getPosicion(self) -> tuple:
         return (self._posicionX, self._posicionY)
