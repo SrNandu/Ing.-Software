@@ -28,16 +28,16 @@ class test_gameObject:
         obj = gameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5,7)
         obj.actualizar(0.016)
-        assert obj.getPosicion() == (5*0.016, 7*0.016)
+        assert obj.getPosicion() == (0.08, 0.112)
 
     def testActualizar20fps():
         obj = gameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5,7)
         obj.actualizar(0.05)
-        assert obj.getPosicion() == (5*0.05, 7*0.05)
+        assert obj.getPosicion() == (0.25, 0.35)
 
     def testActualizar100fps():
         obj = gameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5,7)
         obj.actualizar(0.01)
-        assert obj.getPosicion() == (5*0.01, 7*0.01)
+        assert obj.getPosicion() == (0.05, 0.07)
