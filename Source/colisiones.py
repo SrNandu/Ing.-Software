@@ -47,7 +47,8 @@ class colisiones:
             return False
 
         # Si un rectangulo esta arriba del otro
-        if(y1 + alto1 > y2 or y2 + alto2 > y1):
+        if(y1 + alto1 < y2 or y2 + alto2 < y1):
             return False
 
+        print("COLISIONNNNNNNNNNN")
         return True

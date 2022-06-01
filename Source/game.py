@@ -64,8 +64,8 @@ class game:
             if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 return
 
-            if(game.__gol(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
-                self.__puntaje += 1
+            #if(colisiones.gol(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
+            #    self.__puntaje += 1
 
             self.__dibujar()
 

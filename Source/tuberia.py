@@ -1,10 +1,11 @@
+from pygame import Surface
 from gameObject import gameObject
 
 
 class tuberia(gameObject):
 
-    def __init__(self, sprite):
-        self._velocidadX = -10
+    def __init__(self, sprite : Surface):
+        self._velocidadX = -30
         super().__init__(sprite)
 
     def posicionar(self, anchoVentana: int, altoVentana: int, i: int, arriba: bool):
