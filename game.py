@@ -10,7 +10,7 @@ class game:
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __input = None
-    __ventana = vista()
+    __ventana = vista(1280,720)
     __reloj = pygame.time.Clock()
 
     __puntaje = 0
@@ -18,6 +18,7 @@ class game:
     def __init__(self, input):
         self.__input = input
         self.__initTuberias()
+        self.__initPajaro()
 
     def __initTuberias(self):
         for i in range(10):
@@ -26,18 +27,22 @@ class game:
             tuberiaArriba = gameObject(pygame.image.load("Sprites/pipe.png"))
 
             alto = tuberiaArriba.getSprite().get_size()[1]
-            tuberiaArriba.mover(20 * i, vista.ALTO_VENTANA / 2 + espacio)
+            tuberiaArriba.mover(20 * i, self.__ventana.getAlto() / 2 + espacio)
 
             self.__tuberiasArriba.append(tuberiaArriba)
 
             tuberiaAbajo = gameObject(pygame.image.load("Sprites/pipe.png"))
-            tuberiaAbajo.mover(20 * i, vista.ALTO_VENTANA / 2 - espacio - alto)
+            tuberiaAbajo.mover(20 * i, self.__ventana.getAlto() / 2 - espacio - alto)
 
             self.__tuberiasAbajo.append(tuberiaAbajo)
+
+    def __initPajaro(self):
+        self.__pajaro.mover(self.__ventana.getAncho() / 5,self.__ventana.getAlto() / 2)
         
     def loop(self):
         while True:
 
+            #Deberia ir en input
             #Chequear si se cerro la ventana
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
