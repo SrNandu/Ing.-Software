@@ -1,5 +1,4 @@
-from ast import Import
-from Source.subject import subject
+from subject import subject
 from colisiones import colisiones
 from gameObject import gameObject
 from tuberia import tuberia
@@ -8,24 +7,18 @@ import pygame
 import sys
 
 
-class game(object):
+class game(subject):
 
-    __fondo = gameObject(pygame.image.load("Sprites/background.jpg"))
     __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
     __tuberiasArriba = []
     __tuberiasAbajo = []
-    __input = None
-    __vista = vista(600, 500)
     __reloj = pygame.time.Clock()
 
-    __puntaje = 0
+    def __init__(self, ancho, alto):
+        self.__initTuberias(ancho, alto)
+        self.__initPajaro(ancho, alto)
 
-    def __init__(self, input):
-        self.__input = input
-        self.__initTuberias()
-        self.__initPajaro()
-
-    def __initTuberias(self):
+    def __initTuberias(self, ancho, alto):
         for i in range(10):
             # Crear tuberia de abajo
             tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
@@ -33,18 +26,17 @@ class game(object):
             # Crear tuberia de arriba
             tuberiaArriba = tuberia(pygame.image.load("Sprites/pipe.png"))
 
-            #Posicionar tuberias
+            # Posicionar tuberias
             tuberiaArriba.posicionarConRespectoAbajo(
-                self.__vista.getAncho() / 2, self.__vista.getAlto(), i, tuberiaAbajo)
+                ancho / 2, alto, i, tuberiaAbajo)
 
             self.__tuberiasArriba.append(tuberiaArriba)
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
-    def __initPajaro(self):
-        self.__pajaro.mover(self.__vista.getAncho() / 5,
-                            self.__vista.getAlto() / 2)
+    def __initPajaro(self, ancho, alto):
+        self.__pajaro.mover(ancho / 5, alto / 2)
 
-    def loop(self):
+    def start(self):
         while True:
             # Deberia ir en input
             # Chequear si se cerro la ventana
@@ -58,7 +50,7 @@ class game(object):
             # Actualizar tuberias inferiores
             for i in range(len(self.__tuberiasAbajo)):
                 # Pasar posicion de ultima tuberia
-                self.__tuberiasAbajo[i].actualizar( deltaTime)
+                self.__tuberiasAbajo[i].actualizar(deltaTime)
 
             # Actualizar tuberias superiores
             for i in range(len(self.__tuberiasArriba)):
@@ -69,24 +61,14 @@ class game(object):
             if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 return
 
-            self.__actualizarVista()
+            self._notify()
+            self.__reloj.tick(60)
 
-    def __actualizarVista(self):
+    def getGameObjectsStates(self):
+        states = []
 
-        # Renderizar fondo
-        self.__vista.renderizar(self.__fondo)
+        states.append((self.__pajaro.getSprite(),self.__pajaro.getPosicion()))
+        states.extend((o.getSprite(), o.getPosicion()) for o in self.__tuberiasAbajo)
+        states.extend((o.getSprite(), o.getPosicion()) for o in self.__tuberiasArriba)
 
-        # Renderizar pajaro
-        self.__vista.renderizar(self.__pajaro)
-
-        # Renderizar tuberias inferiores
-        for i in range(len(self.__tuberiasAbajo)):
-            self.__vista.renderizar(self.__tuberiasAbajo[i])
-
-        # Renderizar tuberias superiores
-        for i in range(len(self.__tuberiasArriba)):
-            self.__vista.renderizar(self.__tuberiasArriba[i])
-
-        # Actualizar vista
-        self.__vista.actualizarVentana()
-        self.__reloj.tick(60)
+        return states

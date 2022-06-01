@@ -1,4 +1,3 @@
-from game import game
+from gameController import gameController
 
-gameController = game(1)
-gameController.loop()
+gameController = gameController(1)
