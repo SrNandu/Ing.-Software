@@ -10,18 +10,18 @@ class gameObject:
 
     _sprite = None
 
-    def __init__(self, sprite):
+    def __init__(self, sprite : Surface):
         self._sprite = sprite
 
-    def mover(self, x, y):
+    def mover(self, x : int, y : int):
         self._posicionX = x
         self._posicionY = y
 
-    def actualizar(self, deltaTime):
+    def actualizar(self, deltaTime : float):
         self._posicionX += self._velocidadX * deltaTime
         self._posicionY += self._velocidadY * deltaTime
 
-    def setVelocidad(self, velx, vely):
+    def setVelocidad(self, velx : int, vely : int):
         self._velocidadX = velx
         self._velocidadY = vely
 
