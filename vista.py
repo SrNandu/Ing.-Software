@@ -2,12 +2,13 @@ import pygame
 
 from gameObject import gameObject
 
+
 class vista:
     __ancho = 0
-    __alto = 0   
+    __alto = 0
     __ventana = None
 
-    def __init__(self, ancho: int, alto : int):
+    def __init__(self, ancho: int, alto: int):
         self.__alto = alto
         self.__ancho = ancho
         self.__ventana = pygame.display.set_mode((self.__ancho, self.__alto))
@@ -23,6 +24,3 @@ class vista:
 
     def getAlto(self):
         return self.__alto
-
-
-        

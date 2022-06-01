@@ -27,5 +27,3 @@ class gameObject:
 
     def getPosicion(self):
         return (self._posicionX, self._posicionY)
-    
-
