@@ -1,5 +1,6 @@
 from ast import Import
-from gameObject import gameObject 
+from gameObject import gameObject
+from tuberia import tuberia
 from vista import vista
 import pygame
 import sys
@@ -22,18 +23,14 @@ class game:
 
     def __initTuberias(self):
         for i in range(10):
-            espacio = 30
-
-            tuberiaArriba = gameObject(pygame.image.load("Sprites/pipe.png"))
-
-            alto = tuberiaArriba.getSprite().get_size()[1]
-            tuberiaArriba.mover(self.__ventana.getAncho() / 2 + 100 * i, self.__ventana.getAlto() / 2 + espacio)
-
+            #Crear tuberias de arriba
+            tuberiaArriba = tuberia(pygame.image.load("Sprites/pipe.png"))
+            tuberiaArriba.posicionar(self.__ventana.getAncho(), self.__ventana.getAlto(), i, True)           
             self.__tuberiasArriba.append(tuberiaArriba)
 
-            tuberiaAbajo = gameObject(pygame.image.load("Sprites/pipe.png"))
-            tuberiaAbajo.mover(self.__ventana.getAncho() / 2 + 100 * i, self.__ventana.getAlto() / 2 - espacio - alto)
-
+            #Crear tuberias de abajo
+            tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
+            tuberiaAbajo.posicionar(self.__ventana.getAncho(), self.__ventana.getAlto(), i, False)
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
     def __initPajaro(self):
