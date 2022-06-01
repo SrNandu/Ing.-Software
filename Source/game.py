@@ -62,7 +62,7 @@ class game:
                 self.__tuberiasArriba[i].actualizar(deltaTime)
 
             if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
-                pass
+                return
 
             if(game.__gol(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 self.__puntaje += 1
