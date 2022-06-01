@@ -1,4 +1,4 @@
-from Source.gameObject import gameObject
+from gameObject import gameObject
 import pygame
 
 class TestGame:
