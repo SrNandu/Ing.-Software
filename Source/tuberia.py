@@ -4,19 +4,23 @@ from gameObject import gameObject
 
 
 class tuberia(gameObject):
+    __espacioX = 150
+    __espacioY = 60
 
     def __init__(self, sprite: Surface):
         self._velocidadX = -30
         super().__init__(sprite)
 
-    def posicionar(self, anchoVentana: int, altoVentana: int, i: int, arriba: bool):
-        espacio = 50
-        rand = random.randint(-50, 50)
+    def actualizar(self, deltaTime: float):
+        super().actualizar(deltaTime)
+
+    def posicionarConRespectoAbajo(self, inicioX: int, altoVentana: int, i: int, tuberiaInferior : gameObject):
+        rand = random.randint(-100, 100)
 
         alto = self._sprite.get_size()[1]
 
-        if arriba:
-            self.mover(anchoVentana / 2 + 150 * i, altoVentana / 2 + espacio + rand)
-        else:
-            self.mover(anchoVentana / 2 + 150 * i,
-                       altoVentana / 2 - espacio - alto + rand)
+        self.mover(inicioX + self.__espacioX * i,
+                   altoVentana / 2 + rand + self.__espacioY)
+
+        tuberiaInferior.mover(inicioX + self.__espacioX * i,
+                              altoVentana / 2 + rand - self.__espacioY - alto)

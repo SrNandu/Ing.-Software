@@ -14,7 +14,7 @@ class game:
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __input = None
-    __vista = vista(800, 640)
+    __vista = vista(600, 500)
     __reloj = pygame.time.Clock()
 
     __puntaje = 0
@@ -26,16 +26,17 @@ class game:
 
     def __initTuberias(self):
         for i in range(10):
-            # Crear tuberias de arriba
+            # Crear tuberia de abajo
+            tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
+
+            # Crear tuberia de arriba
             tuberiaArriba = tuberia(pygame.image.load("Sprites/pipe.png"))
-            tuberiaArriba.posicionar(
-                self.__vista.getAncho(), self.__vista.getAlto(), i, True)
+
+            #Posicionar tuberias
+            tuberiaArriba.posicionarConRespectoAbajo(
+                self.__vista.getAncho() / 2, self.__vista.getAlto(), i, tuberiaAbajo)
             self.__tuberiasArriba.append(tuberiaArriba)
 
-            # Crear tuberias de abajo
-            tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
-            tuberiaAbajo.posicionar(
-                self.__vista.getAncho(), self.__vista.getAlto(), i, False)
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
     def __initPajaro(self):
@@ -55,21 +56,21 @@ class game:
 
             # Actualizar tuberias inferiores
             for i in range(len(self.__tuberiasAbajo)):
-                self.__tuberiasAbajo[i].actualizar(deltaTime)
+                # Pasar posicion de ultima tuberia
+                self.__tuberiasAbajo[i].actualizar( deltaTime)
 
             # Actualizar tuberias superiores
             for i in range(len(self.__tuberiasArriba)):
+                # Pasar posicion de ultima tuberia
                 self.__tuberiasArriba[i].actualizar(deltaTime)
 
+            # Chequear colision
             if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 return
 
-            #if(colisiones.gol(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
-            #    self.__puntaje += 1
+            self.__actualizarVista()
 
-            self.__dibujar()
-
-    def __dibujar(self):
+    def __actualizarVista(self):
 
         # Renderizar fondo
         self.__vista.renderizar(self.__fondo)
