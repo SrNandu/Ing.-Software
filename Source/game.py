@@ -35,8 +35,8 @@ class game:
             #Posicionar tuberias
             tuberiaArriba.posicionarConRespectoAbajo(
                 self.__vista.getAncho() / 2, self.__vista.getAlto(), i, tuberiaAbajo)
+                
             self.__tuberiasArriba.append(tuberiaArriba)
-
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
     def __initPajaro(self):
