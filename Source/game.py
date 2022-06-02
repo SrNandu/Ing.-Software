@@ -2,7 +2,7 @@ from subject import subject
 from colisiones import colisiones
 from gameObject import gameObject
 from tuberia import tuberia
-from vista import vista
+import vista
 import pygame
 import sys
 
@@ -42,8 +42,7 @@ class game(subject):
             # Chequear si se cerro la ventana
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    return
 
             deltaTime = self.__reloj.get_time() / 1000
 

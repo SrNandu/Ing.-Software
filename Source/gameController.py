@@ -1,9 +1,10 @@
+from observer import observer
 from game import game
 from vista import vista
 from subject import subject
 
 
-class gameController(subject):
+class gameController(observer):
     __vista = None
     __game = None
     __input = None
