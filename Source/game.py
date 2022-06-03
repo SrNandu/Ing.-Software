@@ -8,17 +8,16 @@ import sys
 
 
 class game(subject):
-
     __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __reloj = pygame.time.Clock()
 
-    def __init__(self, ancho, alto):
+    def __init__(self, ancho: int, alto: int):
         self.__initTuberias(ancho, alto)
         self.__initPajaro(ancho, alto)
 
-    def __initTuberias(self, ancho, alto):
+    def __initTuberias(self, ancho: int, alto: int):
         for i in range(10):
             # Crear tuberia de abajo
             tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
@@ -33,7 +32,7 @@ class game(subject):
             self.__tuberiasArriba.append(tuberiaArriba)
             self.__tuberiasAbajo.append(tuberiaAbajo)
 
-    def __initPajaro(self, ancho, alto):
+    def __initPajaro(self, ancho: int, alto: int):
         self.__pajaro.mover(ancho / 5, alto / 2)
 
     def start(self):
