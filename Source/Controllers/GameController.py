@@ -1,6 +1,6 @@
 from Observer import Observer
-from Game import Game
-from GameView import GameView
+from Model.Game import Game
+from Views.GameView import GameView
 
 
 class GameController(Observer):

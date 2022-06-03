@@ -1,10 +1,8 @@
 from Subject import Subject
-from Colisiones import Colisiones
-from GameObject import GameObject
-from Tuberia import Tuberia
-import GameView
+from Model.Colisiones import Colisiones
+from Model.GameObject import GameObject
+from Model.Tuberia import Tuberia
 import pygame
-import sys
 
 
 class Game(Subject):
@@ -59,7 +57,9 @@ class Game(Subject):
             if(Colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 return
 
+            #Notfica que cambio el modelo
             self._notify()
+
             self.__reloj.tick(60)
 
     def getState(self):

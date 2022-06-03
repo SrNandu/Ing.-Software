@@ -1,4 +1,4 @@
-from GameObject import GameObject
+from Model.GameObject import GameObject
 
 
 class Colisiones:
