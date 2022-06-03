@@ -8,7 +8,10 @@ class subject(object):
 
     def desuscribirse(self, observer: observer):
         self.__observers.remove(observer)
+    
+    def getState(self):
+        pass
 
     def _notify(self):
         for observer in self.__observers:
-            observer.update()
+            observer.update(self)

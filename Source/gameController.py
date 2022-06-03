@@ -13,4 +13,5 @@ class gameController(observer):
         self.__input = input
         self.__game = game(600, 500)
         self.__vista = vista(600, 500, self.__game)
+        self.__game.suscribirse(self.__vista)
         self.__game.start()

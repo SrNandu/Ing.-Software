@@ -63,11 +63,13 @@ class game(subject):
             self._notify()
             self.__reloj.tick(60)
 
-    def getGameObjectsStates(self):
+    def getState(self):
         states = []
 
-        states.append((self.__pajaro.getSprite(),self.__pajaro.getPosicion()))
-        states.extend((o.getSprite(), o.getPosicion()) for o in self.__tuberiasAbajo)
-        states.extend((o.getSprite(), o.getPosicion()) for o in self.__tuberiasArriba)
+        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
+        states.extend((o.getSprite(), o.getPosicion())
+                      for o in self.__tuberiasAbajo)
+        states.extend((o.getSprite(), o.getPosicion())
+                      for o in self.__tuberiasArriba)
 
         return states

@@ -1,3 +1,3 @@
 class observer(object):
-    def update(self):
+    def update(self, subject):
         pass
