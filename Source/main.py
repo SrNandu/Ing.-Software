@@ -1,3 +1,5 @@
-from Controllers.GameController import GameController
+from Model.Game import Game
+from Views.GameView import GameView
 
-GameController = GameController(1)
+game = Game(600, 500)
+gameView = GameView(game, 600, 500)
