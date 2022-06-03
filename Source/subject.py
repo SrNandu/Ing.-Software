@@ -1,12 +1,12 @@
-from observer import observer
+from Observer import Observer
 
-class subject(object):
+class Subject(object):
     __observers = []
     
-    def suscribirse(self, observer: observer):
+    def suscribirse(self, observer: Observer):
         self.__observers.append(observer)
 
-    def desuscribirse(self, observer: observer):
+    def desuscribirse(self, observer: Observer):
         self.__observers.remove(observer)
     
     def getState(self):

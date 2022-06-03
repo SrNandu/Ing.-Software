@@ -1,9 +1,9 @@
 import random
 from pygame import Surface
-from gameObject import gameObject
+from GameObject import GameObject
 
 
-class tuberia(gameObject):
+class Tuberia(GameObject):
     __espacioX = 150
     __espacioY = 60
 
@@ -14,7 +14,7 @@ class tuberia(gameObject):
     def actualizar(self, deltaTime: float):
         super().actualizar(deltaTime)
 
-    def posicionarConRespectoAbajo(self, inicioX: int, altoVentana: int, i: int, tuberiaInferior : gameObject):
+    def posicionarConRespectoAbajo(self, inicioX: int, altoVentana: int, i: int, tuberiaInferior : GameObject):
         rand = random.randint(-100, 100)
 
         alto = self._sprite.get_size()[1]

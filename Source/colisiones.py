@@ -1,9 +1,9 @@
-from gameObject import gameObject
+from GameObject import GameObject
 
 
-class colisiones:
+class Colisiones:
 
-    def colisiona(tuberiasArriba: list[gameObject], tuberiasAbajo: list[gameObject], pajaro: gameObject):
+    def colisiona(tuberiasArriba: list[GameObject], tuberiasAbajo: list[GameObject], pajaro: GameObject):
 
         posicionPajaro = pajaro.getPosicion()
         sizePajaro = pajaro.getSprite().get_size()
@@ -15,7 +15,7 @@ class colisiones:
             posicionTuberia = tuberia.getPosicion()
             sizeTuberia = tuberia.getSprite().get_size()
 
-            if(colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
+            if(Colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
                 return True
 
         #Chequear colision con todas las tuberias de abajo
@@ -25,7 +25,7 @@ class colisiones:
             posicionTuberia = tuberia.getPosicion()
             sizeTuberia = tuberia.getSprite().get_size()
 
-            if(colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
+            if(Colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
                 return True
 
         return False
@@ -50,5 +50,4 @@ class colisiones:
         if(y1 + alto1 < y2 or y2 + alto2 < y1):
             return False
 
-        print("COLISIONNNNNNNNNNN")
         return True

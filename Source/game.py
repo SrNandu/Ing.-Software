@@ -1,14 +1,14 @@
-from subject import subject
-from colisiones import colisiones
-from gameObject import gameObject
-from tuberia import tuberia
-import vista
+from Subject import Subject
+from Colisiones import Colisiones
+from GameObject import GameObject
+from Tuberia import Tuberia
+import GameView
 import pygame
 import sys
 
 
-class game(subject):
-    __pajaro = gameObject(pygame.image.load("Sprites/bird.png"))
+class Game(Subject):
+    __pajaro = GameObject(pygame.image.load("Sprites/bird.png"))
     __tuberiasArriba = []
     __tuberiasAbajo = []
     __reloj = pygame.time.Clock()
@@ -20,10 +20,10 @@ class game(subject):
     def __initTuberias(self, ancho: int, alto: int):
         for i in range(10):
             # Crear tuberia de abajo
-            tuberiaAbajo = tuberia(pygame.image.load("Sprites/pipe.png"))
+            tuberiaAbajo = Tuberia(pygame.image.load("Sprites/pipe.png"))
 
             # Crear tuberia de arriba
-            tuberiaArriba = tuberia(pygame.image.load("Sprites/pipe.png"))
+            tuberiaArriba = Tuberia(pygame.image.load("Sprites/pipe.png"))
 
             # Posicionar tuberias
             tuberiaArriba.posicionarConRespectoAbajo(
@@ -56,7 +56,7 @@ class game(subject):
                 self.__tuberiasArriba[i].actualizar(deltaTime)
 
             # Chequear colision
-            if(colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
+            if(Colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
                 return
 
             self._notify()

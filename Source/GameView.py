@@ -1,24 +1,22 @@
 import pygame
 from pygame import Surface
-from subject import subject
-import game
-from observer import observer
-from gameObject import gameObject
+from Subject import Subject
+from Observer import Observer
 
 
-class vista(observer):
+class GameView(Observer):
     __ancho = 0
     __alto = 0
     __ventana = None
 
     __fondo = pygame.image.load("Sprites/background.jpg")
 
-    def __init__(self, ancho: int, alto: int, game: game):
+    def __init__(self, ancho: int, alto: int):
         self.__alto = alto
         self.__ancho = ancho
         self.__ventana = pygame.display.set_mode((self.__ancho, self.__alto))
 
-    def update(self, subject : subject):
+    def update(self, subject : Subject):
         self.__actualizarVista(subject.getState())
 
     def getAncho(self):

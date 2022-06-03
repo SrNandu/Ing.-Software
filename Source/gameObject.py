@@ -1,8 +1,7 @@
 from pygame import Surface
-from subject import subject
 
 
-class gameObject(object):
+class GameObject(object):
 
     _posicionX = 0
     _posicionY = 0

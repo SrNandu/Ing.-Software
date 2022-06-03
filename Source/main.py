@@ -1,3 +1,3 @@
-from gameController import gameController
+from GameController import GameController
 
-gameController = gameController(1)
+GameController = GameController(1)
