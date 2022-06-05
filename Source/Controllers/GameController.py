@@ -1,6 +1,7 @@
 from Model.Game import Game
 from Controllers.Controller import Controller
 import Views.GameView as GameView
+from threading import Thread
 
 
 class GameController(Controller):
@@ -9,5 +10,7 @@ class GameController(Controller):
         super().__init__(vista, game)
 
         self.__input = input
-        
-        game.start()
+
+        # Iniciar game loop en nuevo hilo para no parar el progrma
+        gameThread = Thread(target=game.start)
+        gameThread.start()

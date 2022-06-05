@@ -12,6 +12,8 @@ class Game(Subject):
     __reloj = pygame.time.Clock()
 
     def __init__(self, ancho: int, alto: int):
+        pygame.init()
+        
         self.__initTuberias(ancho, alto)
         self.__initPajaro(ancho, alto)
 
@@ -35,12 +37,6 @@ class Game(Subject):
 
     def start(self):
         while True:
-            # Deberia ir en input
-            # Chequear si se cerro la ventana
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    return
-
             deltaTime = self.__reloj.get_time() / 1000
 
             # Actualizar tuberias inferiores
