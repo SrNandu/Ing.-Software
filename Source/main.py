@@ -11,7 +11,7 @@ window.setFixedWidth(600)
 window.setFixedHeight(500)
 
 game = Game(600, 500)
-gameView = GameView(game, 600, 500, window)
+gameView = GameView(game, 600, 500)
 window.setCentralWidget(gameView)
 
 window.show()

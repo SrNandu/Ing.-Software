@@ -14,8 +14,8 @@ class GameView(View):
 
     __fondo = pygame.image.load("Sprites/background.jpg")
 
-    def __init__(self, model: Subject, ancho: int, alto: int, parent: QMainWindow = None):
-        super().__init__(model, parent)
+    def __init__(self, model: Subject, ancho: int, alto: int):
+        super().__init__(model)
         self.__vista = pygame.Surface((ancho, alto))
 
         self._controller = GameController(self, model, 1)
@@ -46,5 +46,4 @@ class GameView(View):
 
         self.__image = QtGui.QImage(self.__vista.get_buffer().raw,
         self.getAncho(),
-        self.getAlto(), 
-        QtGui.QImage.Format.Format_RGB32)
+        self.getAlto(), QtGui.QImage.Format.Format_RGB32)

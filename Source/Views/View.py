@@ -7,8 +7,8 @@ class View(QWidget, Observer):
     _controller = None
     _model = None
 
-    def __init__(self, model: Subject, parent: QMainWindow = None):
-        super().__init__(parent)
+    def __init__(self, model: Subject):
+        super().__init__()
 
         self._model = model
         self._model.suscribirse(self)
