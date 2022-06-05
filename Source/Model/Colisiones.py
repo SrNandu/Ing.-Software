@@ -1,26 +1,17 @@
 from Model.GameObject import GameObject
+from Model.Tuberia import Tuberia
 
 
 class Colisiones:
 
-    def colisiona(tuberiasArriba: list[GameObject], tuberiasAbajo: list[GameObject], pajaro: GameObject):
+    def colisiona(tuberias: list[Tuberia], pajaro: GameObject):
 
         posicionPajaro = pajaro.getPosicion()
         sizePajaro = pajaro.getSprite().get_size()
 
-        #Chequear colision con todas las tuberias de arrriba
-        for i in range(len(tuberiasArriba)):
-            tuberia = tuberiasArriba[i]
-
-            posicionTuberia = tuberia.getPosicion()
-            sizeTuberia = tuberia.getSprite().get_size()
-
-            if(Colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
-                return True
-
-        #Chequear colision con todas las tuberias de abajo
-        for i in range(len(tuberiasAbajo)):
-            tuberia = tuberiasAbajo[i]
+        #Chequear colision con todas las tuberias
+        for i in range(len(tuberias)):
+            tuberia = tuberias[i]
 
             posicionTuberia = tuberia.getPosicion()
             sizeTuberia = tuberia.getSprite().get_size()

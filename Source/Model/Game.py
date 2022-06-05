@@ -7,8 +7,7 @@ import pygame
 
 class Game(Subject):
     __pajaro = GameObject(pygame.image.load("Sprites/bird.png"))
-    __tuberiasArriba = []
-    __tuberiasAbajo = []
+    __tuberias: list[Tuberia] = []
     __reloj = pygame.time.Clock()
 
     def __init__(self, ancho: int, alto: int):
@@ -21,18 +20,13 @@ class Game(Subject):
         while True:
             deltaTime = self.__reloj.get_time() / 1000
 
-            # Actualizar tuberias inferiores
-            for i in range(len(self.__tuberiasAbajo)):
+            # Actualizar tuberias
+            for i in range(len(self.__tuberias)):
                 # Pasar posicion de ultima tuberia
-                self.__tuberiasAbajo[i].actualizar(deltaTime)
-
-            # Actualizar tuberias superiores
-            for i in range(len(self.__tuberiasArriba)):
-                # Pasar posicion de ultima tuberia
-                self.__tuberiasArriba[i].actualizar(deltaTime)
+                self.__tuberias[i].actualizar(deltaTime)
 
             # Chequear colision
-            if(Colisiones.colisiona(self.__tuberiasArriba, self.__tuberiasAbajo, self.__pajaro)):
+            if(Colisiones.colisiona(self.__tuberias, self.__pajaro)):
                 return
 
             #Notfica que cambio el modelo
@@ -45,9 +39,7 @@ class Game(Subject):
 
         states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
         states.extend((o.getSprite(), o.getPosicion())
-                      for o in self.__tuberiasAbajo)
-        states.extend((o.getSprite(), o.getPosicion())
-                      for o in self.__tuberiasArriba)
+                      for o in self.__tuberias)
 
         return states
 
@@ -63,8 +55,8 @@ class Game(Subject):
             tuberiaArriba.posicionarConRespectoAbajo(
                 ancho / 2, alto, i, tuberiaAbajo)
 
-            self.__tuberiasArriba.append(tuberiaArriba)
-            self.__tuberiasAbajo.append(tuberiaAbajo)
+            self.__tuberias.append(tuberiaArriba)
+            self.__tuberias.append(tuberiaAbajo)
 
     def __initPajaro(self, ancho: int, alto: int):
         self.__pajaro.mover(ancho / 5, alto / 2)
