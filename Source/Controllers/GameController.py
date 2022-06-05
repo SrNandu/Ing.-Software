@@ -12,5 +12,4 @@ class GameController(Controller):
         self.__input = input
 
         # Iniciar game loop en nuevo hilo para no parar el progrma
-        gameThread = Thread(target=game.start)
-        gameThread.start()
+        game.start()

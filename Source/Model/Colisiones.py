@@ -5,6 +5,14 @@ from Model.Tuberia import Tuberia
 class Colisiones:
 
     def colisiona(tuberia: Tuberia, pajaro: GameObject) -> bool:
+        """
+        Determina si una tuberia colisiona con el pajaro
+
+        :param tuberia: Una tuberia
+        :paran pajaro: Un GameObject representativo del pajaro
+
+        :return: True si colisionan o False si no
+        """
         posicionPajaro = pajaro.getPosicion()
         sizePajaro = pajaro.getSprite().get_size()
 
@@ -18,13 +26,29 @@ class Colisiones:
         return False
 
     def parTuberiasAfuera(parTuberias: tuple[Tuberia]) -> bool:
+        """
+        Determina si un par de tuberias se fueron de la pantalla por el lado izquierdo
+
+        :param parTuberias: Tupla de dos tuberias (Una superios, otra inferior)
+
+        :return: True si se fueron de la pantalla o False si no
+        """
         x = parTuberias[0].getPosicion()[0]
         ancho = parTuberias[0].getSprite().get_size()[0]
 
         return x + ancho < 0
 
     def __intersectanRectangulos(p1: tuple, size1: tuple, p2: tuple, size2: tuple) -> bool:
+        """
+        Determina si dos rectangulos intersectan
 
+        :param p1: Punto donde se posiciona el primer rectangulo
+        :param size1: Tamaño del primer rectangulo
+        :param p2: Punto donde se posiciona el segundo rectangulo
+        :param size2: Tamaño del segundo rectangulo
+
+        :return: True si intersectan o False si no
+        """
         x1 = p1[0]
         y1 = p1[1]
         ancho1 = size1[0]
