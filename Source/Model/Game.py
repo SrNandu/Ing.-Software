@@ -17,24 +17,6 @@ class Game(Subject):
         self.__initTuberias(ancho, alto)
         self.__initPajaro(ancho, alto)
 
-    def __initTuberias(self, ancho: int, alto: int):
-        for i in range(10):
-            # Crear tuberia de abajo
-            tuberiaAbajo = Tuberia(pygame.image.load("Sprites/pipe.png"))
-
-            # Crear tuberia de arriba
-            tuberiaArriba = Tuberia(pygame.image.load("Sprites/pipe.png"))
-
-            # Posicionar tuberias
-            tuberiaArriba.posicionarConRespectoAbajo(
-                ancho / 2, alto, i, tuberiaAbajo)
-
-            self.__tuberiasArriba.append(tuberiaArriba)
-            self.__tuberiasAbajo.append(tuberiaAbajo)
-
-    def __initPajaro(self, ancho: int, alto: int):
-        self.__pajaro.mover(ancho / 5, alto / 2)
-
     def start(self):
         while True:
             deltaTime = self.__reloj.get_time() / 1000
@@ -68,3 +50,21 @@ class Game(Subject):
                       for o in self.__tuberiasArriba)
 
         return states
+
+    def __initTuberias(self, ancho: int, alto: int):
+        for i in range(10):
+            # Crear tuberia de abajo
+            tuberiaAbajo = Tuberia(pygame.image.load("Sprites/pipe.png"))
+
+            # Crear tuberia de arriba
+            tuberiaArriba = Tuberia(pygame.image.load("Sprites/pipe.png"))
+
+            # Posicionar tuberias
+            tuberiaArriba.posicionarConRespectoAbajo(
+                ancho / 2, alto, i, tuberiaAbajo)
+
+            self.__tuberiasArriba.append(tuberiaArriba)
+            self.__tuberiasAbajo.append(tuberiaAbajo)
+
+    def __initPajaro(self, ancho: int, alto: int):
+        self.__pajaro.mover(ancho / 5, alto / 2)
