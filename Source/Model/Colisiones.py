@@ -4,24 +4,24 @@ from Model.Tuberia import Tuberia
 
 class Colisiones:
 
-    def colisiona(tuberias: list[Tuberia], pajaro: GameObject):
+    def colisiona(tuberias: list[Tuberia], pajaro: GameObject) -> bool:
 
         posicionPajaro = pajaro.getPosicion()
         sizePajaro = pajaro.getSprite().get_size()
 
-        #Chequear colision con todas las tuberias
+        # Chequear colision con todas las tuberias
         for i in range(len(tuberias)):
             tuberia = tuberias[i]
 
             posicionTuberia = tuberia.getPosicion()
             sizeTuberia = tuberia.getSprite().get_size()
 
-            if(Colisiones.intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
+            if(Colisiones.__intersectanRectangulos(posicionPajaro, sizePajaro, posicionTuberia, sizeTuberia)):
                 return True
 
         return False
 
-    def intersectanRectangulos(p1 : tuple, size1: tuple, p2: tuple, size2: tuple):
+    def __intersectanRectangulos(p1: tuple, size1: tuple, p2: tuple, size2: tuple) -> bool:
 
         x1 = p1[0]
         y1 = p1[1]
