@@ -8,7 +8,7 @@ class GameObject(object):
     _velocidadX: int = 0
     _velocidadY: int = 0
 
-    _sprite: Surface = None
+    _sprite: Surface
 
     def __init__(self, sprite : Surface):
         self._sprite = sprite
