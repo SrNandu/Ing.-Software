@@ -31,14 +31,12 @@ class Game(Subject):
             for parTuberias in self.__tuberias:
                 for tuberia in parTuberias:
                     tuberia.actualizar(deltaTime)
+                    if(Colisiones.colisiona(tuberia, self.__pajaro)):
+                        return
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
                     self.__tuberias.remove(parTuberias)
                     self.__añadirParTuberias(self.__tuberias[-1][0].getPosicion()[0])
-
-            # Chequear colision
-            #if(Colisiones.colisiona(self.__tuberias, self.__pajaro)):
-            #    return
 
             # Notfica que cambio el modelo
             self._notify()
