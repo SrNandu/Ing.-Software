@@ -1,3 +1,3 @@
 class Observer(object):
-    def update(self):
+    def update(self, mensaje):
         pass

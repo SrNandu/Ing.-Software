@@ -32,18 +32,6 @@ class Game(Subject):
         gameLoopThread = Thread(target=self.__gameLoop)
         gameLoopThread.start()
 
-    def getState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
-        """
-        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
-        """
-        states = []
-
-        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
-        states.extend((tub.getSprite(), tub.getPosicion())
-                      for tuple in self.__tuberias for tub in tuple)
-
-        return states
-
     def __initTuberias(self):
         """
         Inicializar tuberias en posicion inicial
@@ -109,6 +97,18 @@ class Game(Subject):
                         self.__tuberias[-1][0].getPosicion()[0])
 
             # Notfica que cambio el modelo
-            self._notify()
+            self._notify(self.__getGameObjectsState())
 
             self.__reloj.tick(60)
+
+    def __getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
+        """
+        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
+        """
+        states = []
+
+        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
+        states.extend((tub.getSprite(), tub.getPosicion())
+                      for tuple in self.__tuberias for tub in tuple)
+
+        return states

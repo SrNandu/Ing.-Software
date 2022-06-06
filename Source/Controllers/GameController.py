@@ -1,13 +1,13 @@
 from Model.Game import Game
 from Controllers.Controller import Controller
 import Views.GameView as GameView
-from threading import Thread
 
 
 class GameController(Controller):
+    __input = None
 
-    def __init__(self, vista: GameView, game: Game, input):
-        super().__init__(vista, game)
+    def __init__(self, gameView: GameView, game: Game, input):
+        super().__init__(gameView, game)
 
         self.__input = input
 
