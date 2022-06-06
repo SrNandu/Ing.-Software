@@ -12,7 +12,7 @@ class Game(Subject):
     __pajaro = GameObject(pygame.image.load("Sprites/bird.png"))
     __tuberias: list[tuple[Tuberia]] = []
     __cantTuberias: int = 10
-    __reloj = pygame.time.Clock()
+    __relojFrames = pygame.time.Clock()
 
     __ancho: int
     __alto: int
