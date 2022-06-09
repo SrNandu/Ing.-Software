@@ -80,7 +80,7 @@ class Game(Subject):
         Game loop
         """
         while True:
-            deltaTime = self.__reloj.get_time() / 1000
+            deltaTime = self.__relojFrames.get_time() / 1000
 
             # Actualizar tuberias
             for parTuberias in self.__tuberias:
@@ -99,7 +99,7 @@ class Game(Subject):
             # Notfica que cambio el modelo
             self._notify(self.__getGameObjectsState())
 
-            self.__reloj.tick(60)
+            self.__relojFrames.tick(60)
 
     def __getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
         """
