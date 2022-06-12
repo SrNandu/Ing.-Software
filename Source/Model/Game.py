@@ -96,7 +96,7 @@ class Game(Subject):
                     self.__añadirParTuberias(
                         self.__tuberias[-1][0].getPosicion()[0])
 
-            # Notfica que cambio el modelo
+            # Notifica que cambio el modelo
             self._notify(self.__getGameObjectsState())
 
             self.__relojFrames.tick(60)
