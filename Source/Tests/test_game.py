@@ -15,8 +15,5 @@ import pygame
 
 class TestGame:
 
-    def test_colisiona_false_arriba_izq(self):
-        # Setear pajaro
-        pajaro = GameObject(pygame.image.load("Sprites/bird.png"))
-        pajaro.mover(0, 0)
+    def test_initTuberias_500x600(self):
         assert True
