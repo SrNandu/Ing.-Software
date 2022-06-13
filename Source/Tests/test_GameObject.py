@@ -21,34 +21,34 @@ class TestGameObject:
         obj.mover(300, 250)
         assert obj.getPosicion() == (300, 250)
 
-    def testMoverNegativo(self):
+    def test_mover_Negativo(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.mover(-300, -250)
         assert obj.getPosicion() == (-300, -250)
 
-    def testMoverCero(self):
+    def test_mover_Cero(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.mover(0, 0)
         assert obj.getPosicion() == (0, 0)
 
-    def testMoverAfuera(self):
+    def test_mover_Afuera(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.mover(-1000, 1000)
         assert obj.getPosicion() == (-1000, 1000)
 
-    def testActualizar60fps(self):
+    def test_actualizar_60fps(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5, 7)
         obj.actualizar(0.016)
         assert obj.getPosicion() == (0.08, 0.112)
 
-    def testActualizar20fps(self):
+    def test_actualizar_20fps(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5, 7)
         obj.actualizar(0.05)
         assert obj.getPosicion() == (0.25, 0.35)
 
-    def testActualizar100fps(self):
+    def test_actualizar_100fps(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
         obj.setVelocidad(5, 7)
         obj.actualizar(0.01)
