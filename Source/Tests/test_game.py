@@ -17,3 +17,22 @@ class TestGame:
 
     def test_initTuberias_500x600(self):
         assert True
+
+    def test_initTuberias_1000x1200(self):
+        assert True
+    
+    def test_initPajaro_500x600(self):
+        assert True
+    
+    def test_initPajaro_1000x1200(self):
+        assert True
+    
+    def test_añadirTuberias(self):
+        assert True
+
+    def test_moverPajaro_y500(self):
+        assert True
+
+    def test_moverPajaro_y200(self):
+        assert True
+
