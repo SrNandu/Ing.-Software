@@ -34,6 +34,18 @@ class Game(Subject):
         gameLoopThread = Thread(target=self.__gameLoop)
         gameLoopThread.start()
 
+    def getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
+        """
+        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
+        """
+        states = []
+
+        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
+        states.extend((tub.getSprite(), tub.getPosicion())
+                      for tuple in self.__tuberias for tub in tuple)
+
+        return states    
+
     def isGameOver(self)-> bool:
         return self.__gameover
 
@@ -96,7 +108,7 @@ class Game(Subject):
                     if(Colisiones.colisiona(tuberia, self.__pajaro)):
                         self.__gameover = True
 
-                        self._notify()
+                        self._notify(self)
                         break
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
@@ -105,18 +117,6 @@ class Game(Subject):
                         self.__tuberias[-1][0].getPosicion()[0])
 
             # Notifica que cambio el modelo
-            self._notify(self.__getGameObjectsState())
+            self._notify(self)
 
             self.__relojFrames.tick(60)
-
-    def __getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
-        """
-        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
-        """
-        states = []
-
-        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
-        states.extend((tub.getSprite(), tub.getPosicion())
-                      for tuple in self.__tuberias for tub in tuple)
-
-        return states
