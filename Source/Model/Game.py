@@ -18,6 +18,7 @@ class Game(Subject):
     __ancho: int
     __alto: int
 
+    __pausado: bool = False
     __gameoverSignal: pyqtSignal = pyqtSignal()
     __gameover: bool = False
 
@@ -35,10 +36,16 @@ class Game(Subject):
         Lanzar el game loop en un nuevo hilo
         """
 
-        #Comunicacion entre hilos ya que no puedo crear nueva view(GameoverView) desde el hilo nuevo
+        # Comunicacion entre hilos ya que no puedo crear nueva view(GameoverView) desde el hilo nuevo
         gameLoopThread = Thread(target=self.__gameLoop)
-        self.__gameoverSignal.connect(self.onGameover)
+        self.__gameoverSignal.connect(self.__onGameover)
         gameLoopThread.start()
+
+    def pausar(self):
+        pausado = True
+
+    def despausar(self):
+        pausado = False
 
     def getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
         """
@@ -103,28 +110,29 @@ class Game(Subject):
         Game loop
         """
         while True:
-            deltaTime = self.__relojFrames.get_time() / 1000
+            if not self.__pausado:
+                deltaTime = self.__relojFrames.get_time() / 1000
 
-            # Actualizar tuberias
-            for parTuberias in self.__tuberias:
-                for tuberia in parTuberias:
-                    # Actualizar posicion
-                    tuberia.actualizar(deltaTime)
+                # Actualizar tuberias
+                for parTuberias in self.__tuberias:
+                    for tuberia in parTuberias:
+                        # Actualizar posicion
+                        tuberia.actualizar(deltaTime)
 
-                    if(Colisiones.colisiona(tuberia, self.__pajaro)):
-                        self.__gameoverSignal.emit()
-                        return
+                        if(Colisiones.colisiona(tuberia, self.__pajaro)):
+                            self.__gameoverSignal.emit()
+                            return
 
-                if(Colisiones.parTuberiasAfuera(parTuberias)):
-                    self.__tuberias.remove(parTuberias)
-                    self.__añadirParTuberias(
-                        self.__tuberias[-1][0].getPosicion()[0])
+                    if(Colisiones.parTuberiasAfuera(parTuberias)):
+                        self.__tuberias.remove(parTuberias)
+                        self.__añadirParTuberias(
+                            self.__tuberias[-1][0].getPosicion()[0])
 
             # Notifica que cambio el modelo
             self._notify(self)
 
             self.__relojFrames.tick(60)
 
-    def onGameover(self):
+    def __onGameover(self):
         self.__gameover = True
         self._notify(self)
