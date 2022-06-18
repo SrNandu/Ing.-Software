@@ -62,6 +62,9 @@ class Game(Subject):
     def isGameOver(self) -> bool:
         return self.__gameover
 
+    def isPausado(self) -> bool:
+        return self.__pausado
+
     def __initPajaro(self):
         """
         Inicializar pajaro en la posicion inicial
