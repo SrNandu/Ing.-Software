@@ -44,9 +44,9 @@ class TestGameObject:
 
     def test_actualizar_20fps(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
-        obj.setVelocidad(5, 7)
+        obj.setVelocidad(5, 8)
         obj.actualizar(0.05)
-        assert obj.getPosicion() == (0.25, 0.35)
+        assert obj.getPosicion() == (0.25, 0.40)
 
     def test_actualizar_100fps(self):
         obj = GameObject(pygame.image.load("Sprites/bird.png"))
