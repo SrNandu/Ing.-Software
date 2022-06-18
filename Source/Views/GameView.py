@@ -1,6 +1,7 @@
 import pygame
 from pygame import Surface
-from Controllers.GameController import GameController
+from Model.Game import Game
+from Controllers.Controller import Controller
 from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
@@ -12,19 +13,20 @@ class GameView(View):
     __gameSurface: Surface
     __imagenGame: QtGui.QImage
 
-    def __init__(self, model: Subject, ancho: int, alto: int):
-        super().__init__(model)
+    def __init__(self, controller: Controller, ancho: int, alto: int):
+        super().__init__(controller)
         self.__gameSurface = pygame.Surface((ancho, alto))
 
-        self._controller = GameController(self, model, 1)
-
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
-        self.__gameSurface.get_width(),
-        self.__gameSurface.get_height(), QtGui.QImage.Format.Format_RGB32)
+                                         self.__gameSurface.get_width(),
+                                         self.__gameSurface.get_height(), QtGui.QImage.Format.Format_RGB32)
 
-    def update(self, mensaje):
-        self.__actualizarGame(mensaje)
-        #Llama el paintEvent
+    def update(self, sender: Subject):
+        if isinstance(sender, Game):
+            sender: Game
+            self.__actualizarGame(sender.getGameObjectsState())
+
+        # Llama el paintEvent
         QWidget.update(self)
 
     def paintEvent(self, event):
@@ -46,5 +48,5 @@ class GameView(View):
         self.__gameSurface.blits(gameObjectsStates)
 
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
-        self.__gameSurface.get_width(),
-        self.__gameSurface.get_height(), QtGui.QImage.Format.Format_RGB32)
+                                         self.__gameSurface.get_width(),
+                                         self.__gameSurface.get_height(), QtGui.QImage.Format.Format_RGB32)

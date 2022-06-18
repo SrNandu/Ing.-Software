@@ -1,11 +1,12 @@
 from concurrent.futures import thread
+from threading import Thread
 from Subject import Subject
 from Model.Colisiones import Colisiones
 from Model.GameObject import GameObject
 from Model.Tuberia import Tuberia
 import pygame
 import random
-from threading import Thread
+from PyQt5.QtCore import pyqtSignal
 
 
 class Game(Subject):
@@ -17,7 +18,11 @@ class Game(Subject):
     __ancho: int
     __alto: int
 
+    __gameoverSignal: pyqtSignal = pyqtSignal()
+    __gameover: bool = False
+
     def __init__(self, ancho: int, alto: int):
+        super().__init__()
         pygame.init()
 
         self.__ancho = ancho
@@ -29,8 +34,32 @@ class Game(Subject):
         """
         Lanzar el game loop en un nuevo hilo
         """
+
+        #Comunicacion entre hilos ya que no puedo crear nueva view(GameoverView) desde el hilo nuevo
         gameLoopThread = Thread(target=self.__gameLoop)
+        self.__gameoverSignal.connect(self.onGameover)
         gameLoopThread.start()
+
+    def getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
+        """
+        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
+        """
+        states = []
+
+        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
+        states.extend((tub.getSprite(), tub.getPosicion())
+                      for tuple in self.__tuberias for tub in tuple)
+
+        return states
+
+    def isGameOver(self) -> bool:
+        return self.__gameover
+
+    def __initPajaro(self):
+        """
+        Inicializar pajaro en la posicion inicial
+        """
+        self.__pajaro.mover(self.__ancho / 5, self.__alto / 2)
 
     def __initTuberias(self):
         """
@@ -69,12 +98,6 @@ class Game(Subject):
 
         self.__tuberias.append((tuberiaInferior, tuberiaSuperior))
 
-    def __initPajaro(self):
-        """
-        Inicializar pajaro en la posicion inicial
-        """
-        self.__pajaro.mover(self.__ancho / 5, self.__alto / 2)
-
     def __gameLoop(self):
         """
         Game loop
@@ -89,6 +112,7 @@ class Game(Subject):
                     tuberia.actualizar(deltaTime)
 
                     if(Colisiones.colisiona(tuberia, self.__pajaro)):
+                        self.__gameoverSignal.emit()
                         return
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
@@ -97,18 +121,10 @@ class Game(Subject):
                         self.__tuberias[-1][0].getPosicion()[0])
 
             # Notifica que cambio el modelo
-            self._notify(self.__getGameObjectsState())
+            self._notify(self)
 
             self.__relojFrames.tick(60)
 
-    def __getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
-        """
-        Devuelve el estado del juego en forma de una lista con sprites y sus posiciones
-        """
-        states = []
-
-        states.append((self.__pajaro.getSprite(), self.__pajaro.getPosicion()))
-        states.extend((tub.getSprite(), tub.getPosicion())
-                      for tuple in self.__tuberias for tub in tuple)
-
-        return states
+    def onGameover(self):
+        self.__gameover = True
+        self._notify(self)
