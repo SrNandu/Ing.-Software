@@ -109,7 +109,7 @@ class Game(Subject):
                         self.__gameover = True
 
                         self._notify(self)
-                        break
+                        return
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
                     self.__tuberias.remove(parTuberias)

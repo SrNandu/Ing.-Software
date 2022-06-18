@@ -5,7 +5,7 @@ from Model.Game import Game
 from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMainWindow
 
 
 class GameView(View):
@@ -13,8 +13,8 @@ class GameView(View):
     __gameSurface: Surface
     __imagenGame: QtGui.QImage
 
-    def __init__(self, model: Subject, ancho: int, alto: int):
-        super().__init__(model)
+    def __init__(self, window: QMainWindow, model: Subject, ancho: int, alto: int):
+        super().__init__(window,model)
         self.__gameSurface = pygame.Surface((ancho, alto))
 
         self._controller = GameController(self, model, 1)

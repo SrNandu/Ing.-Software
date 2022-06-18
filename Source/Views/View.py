@@ -8,8 +8,9 @@ class View(QWidget, Observer):
     _controller: Controller
     _model: Subject
 
-    def __init__(self, model: Subject):
+    def __init__(self, window: QMainWindow, model: Subject):
         super().__init__()
+        window.setCentralWidget(self)
 
         self._model = model
         self._model.suscribirse(self)
