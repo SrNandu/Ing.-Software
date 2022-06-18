@@ -20,4 +20,13 @@ class PuntajeService:
     def setImputStrategy(self, inputStrategy):
        self.__inputStrategy = inputStrategy
 
-           
+    def getPuntajeMax(self):
+        return self.__puntajeMax
+
+    def setPuntajeIfMax(self, puntaje):
+        if(puntaje> self.__puntajeMax):
+            self.__setPuntajeMax()  
+
+    def __setPuntajeMax(self):
+            file = open("Textos/puntaje.txt", "w")            
+            file.write("Puntaje maximo:" + self.__puntajeMax)
