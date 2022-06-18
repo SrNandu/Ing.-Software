@@ -14,7 +14,7 @@ class GameView(View):
     __imagenGame: QtGui.QImage
 
     def __init__(self, controller: Controller, ancho: int, alto: int):
-        super().__init__(self)
+        super().__init__(controller)
         self.__gameSurface = pygame.Surface((ancho, alto))
 
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,

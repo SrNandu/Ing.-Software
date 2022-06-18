@@ -1,6 +1,7 @@
 from Observer import Observer
+from PyQt5.QtCore import QObject
 
-class Subject(object):
+class Subject(QObject):
     __observers: list[Observer] = []
     
     def suscribirse(self, observer: Observer):

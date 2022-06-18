@@ -1,7 +1,8 @@
 from Model.Game import Game
 from Controllers.Controller import Controller
-import Views.GameView as GameView
-
+from Subject import Subject
+from Window import Window
+from Views.GameoverView import GameoverView
 
 class GameController(Controller):
     __input = None
@@ -11,5 +12,9 @@ class GameController(Controller):
 
         self.__input = input
 
-        # Iniciar game loop en nuevo hilo para no parar el progrma
-        game.start()
+    def update(self, sender: Subject):
+        if isinstance(sender, Game):
+            sender: Game
+            if sender.isGameOver():
+                Window.setViewActual(GameoverView(Controller(Subject())))
+
