@@ -17,6 +17,8 @@ class Game(Subject):
     __ancho: int
     __alto: int
 
+    __gameover: bool = False
+
     def __init__(self, ancho: int, alto: int):
         pygame.init()
 
@@ -31,6 +33,9 @@ class Game(Subject):
         """
         gameLoopThread = Thread(target=self.__gameLoop)
         gameLoopThread.start()
+
+    def isGameOver(self)-> bool:
+        return self.__gameover
 
     def __initTuberias(self):
         """
@@ -89,7 +94,10 @@ class Game(Subject):
                     tuberia.actualizar(deltaTime)
 
                     if(Colisiones.colisiona(tuberia, self.__pajaro)):
-                        return
+                        self.__gameover = True
+
+                        self._notify()
+                        break
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
                     self.__tuberias.remove(parTuberias)
