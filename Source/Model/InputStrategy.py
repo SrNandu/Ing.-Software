@@ -2,7 +2,14 @@ from Subject import Subject
 from scipy.spatial import distance as dist
 from imutils import face_utils
 import dlib
+import sys
+import os
 
+# Nombre del directorio
+actual = os.path.dirname(os.path.realpath(__file__))
+
+# Nombre del directorio padre
+padre = os.path.dirname(actual)
 
 class InputStrategy(Subject):
     OJO_UMBRAL = 0.3
@@ -17,21 +24,22 @@ class InputStrategy(Subject):
 
     __ojoICerrado: bool = False
     __ojoDCerrado: bool = False
-    __bocaAbierta:bool = False
+    __bocaAbierta: bool = False
 
     __poscicion: float
     __gesto: str
+
+    __detectorCara: None
 
     def __init__(self):
         super().__init__()
 
         self.__detectorCara = dlib.get_frontal_face_detector()
-        self.__detectorPuntosCara = dlib.shape_predictor(
-            "DetectorPuntosCara.dat")
+        path = padre + '\\shape_predictor_68_face_landmarks.dat'
+        self.__detectorPuntosCara = dlib.shape_predictor(path)
 
     def reconocer(self, frame):
         pass
-
 
     def __detectarGuiño(self, puntosCara):
         ojoIzq = puntosCara[self.oIStart:self.oIEnd]
@@ -54,18 +62,17 @@ class InputStrategy(Subject):
             if self.__ojoDCerrado == True:
                 self.__gesto = "GiñoD"
 
-    def __detectarAperturaBoca(self,puntosCara):
-        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60,67])
+    def __detectarAperturaBoca(self, puntosCara):
+        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60, 67])
 
         if aperturaBoca > self.BOCA_UMBRAL:
             self.__bocaAbierta = True
         else:
-            self.__bocaAbierta= False
+            self.__bocaAbierta = False
             if self.__bocaAbierta == True:
                 self.__gesto = "Boca"
 
-
-    def __calcularAperturaBoca(self,boca):
+    def __calcularAperturaBoca(self, boca):
         # Calcula distancia eucleciana de las landmarks verticales
         V = dist.euclidean(boca[2], boca[6])
         # Calcula distancia eucleciana de las landmarks verticales horizontales

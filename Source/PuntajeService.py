@@ -1,23 +1,30 @@
 from io import TextIOWrapper
 import os
+from Model.InputStrategy import InputStrategy
+from Model.InputCabezaStrategy import InputCabezaStrategy
+from Model.InputManoStrategy import InputManoStrategy
+
 
 
 class PuntajeService:
 
     __puntajeMax: int = 0
-    __inputStrategy: str = "InputCabezaStrategy"
+    __inputStrategy: InputStrategy = InputCabezaStrategy()
 
     def __init__(self):
         file: TextIOWrapper
         if os.path.isfile('puntaje.txt'):
             with open("puntaje.txt", "r") as file:
                 self.__puntajeMax = int(file.readline())
-                self.__inputStrategy = file.readline()
+                input = file.readline()
+
+                if input == "InputManoStrategy":
+                    self.__inputStrategy = InputManoStrategy()
 
         else:
             self.__escribirArchivo()
 
-    def setImputStrategy(self, inputStrategy):  # :ImputStategy
+    def setImputStrategy(self, inputStrategy: InputStrategy):  # :ImputStategy
         self.__inputStrategy = inputStrategy
         self.__escribirArchivo()  
 
@@ -36,4 +43,4 @@ class PuntajeService:
         with open("puntaje.txt", "w") as file:
             file.write(str(self.__puntajeMax))
             file.write("\n")
-            file.write(self.__inputStrategy)
+            file.write(self.__inputStrategy.__class__.__name__)

@@ -4,9 +4,14 @@ from Model.Menu import Menu
 from Controllers.MenuController import MenuController
 from Window import Window
 import sys
+from PuntajeService import PuntajeService
 
 app = QApplication(sys.argv)
 Window.createWindow(600, 500)
+
+service = PuntajeService()
+
+inputStrategy = service.getImputStrategy()
 
 #game = Game(600, 500)
 #gameController = GameController(game, 1)
