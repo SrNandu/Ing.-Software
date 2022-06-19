@@ -6,10 +6,8 @@ from PyQt5.QtWidgets import QWidget, QMainWindow
 
 class View(QWidget, Observer):
     _controller: Controller
-    _model: Subject
 
-    def __init__(self, model: Subject):
+    def __init__(self, controller: Controller):
         super().__init__()
 
-        self._model = model
-        self._model.suscribirse(self)
+        self._controller = controller
