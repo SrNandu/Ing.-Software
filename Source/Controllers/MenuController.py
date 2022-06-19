@@ -11,3 +11,5 @@ class MenuController(Controller):
 
     def __init__(self, menu: Menu):
         super().__init__(menu)
+
+    

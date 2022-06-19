@@ -19,8 +19,8 @@ class MenuView(View):
         main_layout.setVerticalSpacing(15)
 
         main_layout.addWidget(self.__botones[0], 0, 0, 1, 2)
-        main_layout.addWidget(self.__botones[1], 0, 2, 1, 2)
-        main_layout.addWidget(self.__botones[2], 1, 0, 1, 2)
+        main_layout.addWidget(self.__botones[1], 1, 1, 1, 1)
+        main_layout.addWidget(self.__botones[2], 1, 0, 1, 1)
 
         self.setLayout(main_layout)
         self.setVisible(True)

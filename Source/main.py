@@ -19,6 +19,8 @@ menu = Menu(3)
 menuController = MenuController(menu)
 menuView = MenuView(menuController)
 
+menu.suscribirse(menuView)
+
 Window.setViewActual(menuView)
         
 app.exec_()
