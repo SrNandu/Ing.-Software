@@ -80,3 +80,13 @@ def test_colisiona_noColisionAbajo(gameObject : GameObject, tuberia : Tuberia):
     gameObject.mover(1,1)
     tuberia.mover(1,330)
     assert Colisiones.colisiona(gameObject,tuberia) == False
+
+def test_parTuberiasAfuera_x_100(tuberia0 : Tuberia, tuberia1 : Tuberia):
+    tuberia0.mover(-100,1)
+    tuberia1.mover(-100,400)
+    assert Colisiones.parTuberiasAfuera([tuberia0, tuberia1]) == True
+
+def test_parTuberiasAfuera_x100(tuberia0 : Tuberia, tuberia1 : Tuberia):
+    tuberia0.mover(100,1)
+    tuberia1.mover(100,400)
+    assert Colisiones.parTuberiasAfuera([tuberia0, tuberia1]) == False
