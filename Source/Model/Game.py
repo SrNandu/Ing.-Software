@@ -18,6 +18,7 @@ class Game(Subject):
     __ancho: int
     __alto: int
 
+    __pausado: bool = False
     __gameoverSignal: pyqtSignal = pyqtSignal()
     __gameover: bool = False
 
@@ -27,7 +28,7 @@ class Game(Subject):
 
         self.__ancho = ancho
         self.__alto = alto
-        self.__initTuberias()
+        self.__tuberias = self.__makeTuberias()
         self.__initPajaro()
 
     def start(self):
@@ -35,10 +36,16 @@ class Game(Subject):
         Lanzar el game loop en un nuevo hilo
         """
 
-        #Comunicacion entre hilos ya que no puedo crear nueva view(GameoverView) desde el hilo nuevo
+        # Comunicacion entre hilos ya que no puedo crear nueva view(GameoverView) desde el hilo nuevo
         gameLoopThread = Thread(target=self.__gameLoop)
-        self.__gameoverSignal.connect(self.onGameover)
+        self.__gameoverSignal.connect(self.__onGameover)
         gameLoopThread.start()
+
+    def pausar(self):
+        pausado = True
+
+    def despausar(self):
+        pausado = False
 
     def getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
         """
@@ -55,26 +62,33 @@ class Game(Subject):
     def isGameOver(self) -> bool:
         return self.__gameover
 
+    def isPausado(self) -> bool:
+        return self.__pausado
+
     def __initPajaro(self):
         """
         Inicializar pajaro en la posicion inicial
         """
         self.__pajaro.mover(self.__ancho / 5, self.__alto / 2)
 
-    def __initTuberias(self):
+    def __makeTuberias(self) -> list[tuple[Tuberia]]:
         """
         Inicializar tuberias en posicion inicial
         """
+        tuberias: list[tuple[Tuberia]] = []
+
         for i in range(self.__cantTuberias):
             if i == 0:
                 # No hay tuberias entonces posicionar en la posicion de la primera tuberia
-                self.__añadirParTuberias(self.__ancho / 2)
+                tuberias.append(self.__makeParTuberias(self.__ancho / 2))
             else:
                 # Posicionar detras del ultimo par de tuberias
-                self.__añadirParTuberias(
-                    self.__tuberias[-1][0].getPosicion()[0])
+                tuberias.append(self.__makeParTuberias(
+                    tuberias[-1][0].getPosicion()[0]))
 
-    def __añadirParTuberias(self, x: int):
+        return tuberias
+
+    def __makeParTuberias(self, x: int) -> tuple[Tuberia]:
         """
         Añade un par de tuberias (una superior, otra inferior) al juego
 
@@ -96,35 +110,36 @@ class Game(Subject):
         # Posicionar tuberia superior
         tuberiaSuperior.posicionarTuberia(x, self.__alto, rand)
 
-        self.__tuberias.append((tuberiaInferior, tuberiaSuperior))
+        return (tuberiaInferior, tuberiaSuperior)
 
     def __gameLoop(self):
         """
         Game loop
         """
         while True:
-            deltaTime = self.__relojFrames.get_time() / 1000
+            if not self.__pausado:
+                deltaTime = self.__relojFrames.get_time() / 1000
 
-            # Actualizar tuberias
-            for parTuberias in self.__tuberias:
-                for tuberia in parTuberias:
-                    # Actualizar posicion
-                    tuberia.actualizar(deltaTime)
+                # Actualizar tuberias
+                for parTuberias in self.__tuberias:
+                    for tuberia in parTuberias:
+                        # Actualizar posicion
+                        tuberia.actualizar(deltaTime)
 
-                    if(Colisiones.colisiona(tuberia, self.__pajaro)):
-                        self.__gameoverSignal.emit()
-                        return
+                        if(Colisiones.colisiona(tuberia, self.__pajaro)):
+                            self.__gameoverSignal.emit()
+                            return
 
-                if(Colisiones.parTuberiasAfuera(parTuberias)):
-                    self.__tuberias.remove(parTuberias)
-                    self.__añadirParTuberias(
-                        self.__tuberias[-1][0].getPosicion()[0])
+                    if(Colisiones.parTuberiasAfuera(parTuberias)):
+                        self.__tuberias.remove(parTuberias)
+                        self.__añadirParTuberias(
+                            self.__tuberias[-1][0].getPosicion()[0])
 
             # Notifica que cambio el modelo
             self._notify(self)
 
             self.__relojFrames.tick(60)
 
-    def onGameover(self):
+    def __onGameover(self):
         self.__gameover = True
         self._notify(self)
