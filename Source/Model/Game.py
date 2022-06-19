@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 from Subject import Subject
 from Model.Colisiones import Colisiones
 from Model.GameObject import GameObject
@@ -80,7 +79,7 @@ class Game(Subject):
         """
         Game loop
         """
-        indice : int = 0
+        indice: int = 0
         while True:
             deltaTime = self.__relojFrames.get_time() / 1000
 
@@ -97,17 +96,11 @@ class Game(Subject):
                     self.__tuberias.remove(parTuberias)
                     self.__añadirParTuberias(
                         self.__tuberias[-1][0].getPosicion()[0])
-                    indice= indice-1
+                    indice = indice-1
 
-                #actualizo el puntaje de manera media chota perdon nandu
-                
-                
-            if(Colisiones.atravesoTuberias(self.__tuberias[indice], self.__pajaro) ):
+            if(Colisiones.atravesoTuberias(self.__tuberias[indice], self.__pajaro)):
                 self.__puntaje = self.__puntaje + 1
                 indice = indice + 1
-                print(self.__puntaje)
-
-            
 
             # Notifica que cambio el modelo
             self._notify(self.__getGameObjectsState())
