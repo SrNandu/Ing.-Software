@@ -23,13 +23,12 @@ def test_get_puntaje_max():
     obj.setPuntajeIfMax(100)
     assert obj.getPuntajeMax() == 100
 
-<<<<<<< HEAD
-=======
-    def test_set_puntaje_if_max_true():
-        obj = PuntajeService()
-        obj.setPuntajeIfMax(50)
-        assert obj.getPuntajeMax() == 50
->>>>>>> 59f23b35fa473acb6f334c76b7020dbf7d307f5e
+
+def test_set_puntaje_if_max_true():
+    obj = PuntajeService()
+    obj.setPuntajeIfMax(50)
+    assert obj.getPuntajeMax() == 50
+
 
 def test_set_puntaje_if_max_true():
     obj = PuntajeService()
