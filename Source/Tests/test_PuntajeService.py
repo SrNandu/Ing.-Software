@@ -27,7 +27,7 @@ class test_puntajeService:
     def test_set_puntaje_if_max_true():
         obj = PuntajeService()
         obj.setPuntajeIfMax(50)
-        assert obj.getPuntajeMax == 50
+        assert obj.getPuntajeMax() == 50
 
     def test_set_puntaje_if_max_true_2():
         obj = PuntajeService()

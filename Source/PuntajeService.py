@@ -1,5 +1,6 @@
 from io import TextIOWrapper
 import os
+
 class PuntajeService: 
     
     __puntajeMax: int = 0
@@ -10,12 +11,17 @@ class PuntajeService:
             
             with open("Textos/puntaje.txt","r") as file:
                 
-               __puntajeMax = int(file.read()) 
+               __puntajeMax = file.read()
+               __puntajeMax = int(__puntajeMax)
+               print(__puntajeMax)
+               
                 
         else: 
-            file = open("Textos/puntaje.txt", "w")            
-            file.write("0")
-            __puntajeMax = int(file.read)
+            with open("Textos/puntaje.txt", "w") as file:            
+                file.write("0")
+            with open("Textos/puntaje.txt","r") as file:
+                __puntajeMax = file.read()
+            __puntajeMax = int(__puntajeMax)
 
 
 
@@ -35,4 +41,4 @@ class PuntajeService:
     def __setPuntajeMax(self, puntaje :int):
         self.__puntajeMax = puntaje        
         with open("Textos/puntaje.txt", "w") as file: 
-            file.write("Puntaje maximo:" + self.__puntajeMax)
+            file.write(str(self.__puntajeMax))
