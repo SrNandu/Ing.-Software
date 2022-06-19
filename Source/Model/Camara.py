@@ -1,20 +1,26 @@
-from Source.Model.InputStrategy import InputStrategy
-from Source.Subject import Subject
+from threading import Thread
+from Model.InputStrategy import InputStrategy
+from Subject import Subject
 from imutils.video import VideoStream
 import imutils
 import cv2
 
+
 class Camara(Subject):
     __inputStrategy: InputStrategy
 
-    #SINGLETON
+    # SINGLETON
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(Camara, cls).__new__(cls)
         return cls.instance
 
     def __init__(self):
-        vs = VideoStream(src=0).start()
+        thread = Thread(target=self.__startReconocimiento)
+        thread.start()
+
+    def setInputStrategy(self, inputStrategy: InputStrategy):
+        self.__inputStrategy = inputStrategy
 
     def __startReconocimiento(self):
         vs = VideoStream(src=0).start()

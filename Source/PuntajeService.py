@@ -5,7 +5,6 @@ from Model.InputCabezaStrategy import InputCabezaStrategy
 from Model.InputManoStrategy import InputManoStrategy
 
 
-
 class PuntajeService:
 
     __puntajeMax: int = 0
@@ -26,17 +25,17 @@ class PuntajeService:
 
     def setImputStrategy(self, inputStrategy: InputStrategy):  # :ImputStategy
         self.__inputStrategy = inputStrategy
-        self.__escribirArchivo()  
+        self.__escribirArchivo()
 
     def setPuntajeIfMax(self, puntaje: int):
         if(puntaje > self.__puntajeMax):
             self.__puntajeMax = puntaje
-            self.__escribirArchivo()     
+            self.__escribirArchivo()
 
-    def getImputStrategy(self):
+    def getImputStrategy(self) -> InputStrategy:
         return self.__inputStrategy
 
-    def getPuntajeMax(self):
+    def getPuntajeMax(self) -> int:
         return self.__puntajeMax
 
     def __escribirArchivo(self):

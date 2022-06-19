@@ -5,13 +5,14 @@ from Controllers.MenuController import MenuController
 from Window import Window
 import sys
 from PuntajeService import PuntajeService
+from Model.Camara import Camara
 
 app = QApplication(sys.argv)
-Window.createWindow(600, 500)
+Window.createWindow(1280, 720)
 
+camara = Camara()
 service = PuntajeService()
-
-inputStrategy = service.getImputStrategy()
+camara.setInputStrategy(service.getImputStrategy())
 
 #game = Game(600, 500)
 #gameController = GameController(game, 1)

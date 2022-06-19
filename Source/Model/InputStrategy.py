@@ -11,6 +11,7 @@ actual = os.path.dirname(os.path.realpath(__file__))
 # Nombre del directorio padre
 padre = os.path.dirname(actual)
 
+
 class InputStrategy(Subject):
     OJO_UMBRAL = 0.3
     OJO_FRAMES = 3
@@ -22,26 +23,31 @@ class InputStrategy(Subject):
     (oIStart, oIEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
     (oDStart, oDEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
+    __ojoIFrames: int = 0
+    __ojoDFrames: int = 0
+    __bocaAbiertaFrames: int = 0
+
     __ojoICerrado: bool = False
     __ojoDCerrado: bool = False
     __bocaAbierta: bool = False
 
-    __poscicion: float
+    _posicion: float = 0
     __gesto: str
 
-    __detectorCara: None
+    _detectorCara: None
+    _detectorPuntosCara: None
 
     def __init__(self):
         super().__init__()
 
-        self.__detectorCara = dlib.get_frontal_face_detector()
+        self._detectorCara = dlib.get_frontal_face_detector()
         path = padre + '\\shape_predictor_68_face_landmarks.dat'
-        self.__detectorPuntosCara = dlib.shape_predictor(path)
+        self._detectorPuntosCara = dlib.shape_predictor(path)
 
     def reconocer(self, frame):
         pass
 
-    def __detectarGuiño(self, puntosCara):
+    def _detectarGuiño(self, puntosCara):
         ojoIzq = puntosCara[self.oIStart:self.oIEnd]
         ojoDer = puntosCara[self.oDStart:self.oDEnd]
 
@@ -49,28 +55,34 @@ class InputStrategy(Subject):
         aperturaOjoDer = self.__calcularAperturaOjo(ojoDer)
 
         if aperturaOjoIzq < self.OJO_UMBRAL:
-            self.__ojoICerrado = True
+            if self.__ojoIFrames > self.OJO_FRAMES and not self.__ojoICerrado:
+                self.__ojoICerrado = True
+                self.__gesto = "GiñoI"
+                print(self.__gesto)
         else:
             self.__ojoICerrado = False
-            if self.__ojoICerrado == True:
-                self.__gesto = "GiñoI"
+            self.__ojoIFrames = 0
 
         if aperturaOjoDer < self.OJO_UMBRAL:
-            self.__ojoDCerrado = True
+            if self.__ojoDFrames > self.OJO_FRAMES and not self.__ojoDCerrado:
+                self.__ojoDCerrado = True
+                self.__gesto = "GiñoD"
+                print(self.__gesto)
         else:
             self.__ojoDCerrado = False
-            if self.__ojoDCerrado == True:
-                self.__gesto = "GiñoD"
+            self.__ojoDFrames = 0
 
-    def __detectarAperturaBoca(self, puntosCara):
-        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60, 67])
+    def _detectarAperturaBoca(self, puntosCara):
+        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60:67])
 
-        if aperturaBoca > self.BOCA_UMBRAL:
-            self.__bocaAbierta = True
+        if aperturaBoca > self.OJO_UMBRAL:
+            if self.__bocaAbiertaFrames > self.OJO_UMBRAL and not self.__bocaAbierta:
+                self.__bocaAbierta = True
+                self.__gesto = "GiñoI"
+                print(self.__gesto)
         else:
             self.__bocaAbierta = False
-            if self.__bocaAbierta == True:
-                self.__gesto = "Boca"
+            self.__bocaAbiertaFrames = 0
 
     def __calcularAperturaBoca(self, boca):
         # Calcula distancia eucleciana de las landmarks verticales
