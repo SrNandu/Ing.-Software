@@ -20,8 +20,8 @@ class Menu(Subject):
         self.__boton = self.__boton - 1
         if self.__boton == -1:
             self.__boton = self.__cantBotones
-        
+
         self._notify(self)
 
-    def getBoton(self):
+    def getBoton(self) -> int:
         return self.__boton

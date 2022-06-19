@@ -1,3 +1,4 @@
+from Model.Menu import Menu
 from Views.View import View
 from Controllers.Controller import Controller
 from PyQt5.QtWidgets import QGridLayout, QPushButton
@@ -5,7 +6,7 @@ from PyQt5.QtWidgets import QGridLayout, QPushButton
 
 class MenuView(View):
 
-    __botones: list[ QPushButton] = []
+    __botones: list[QPushButton] = []
 
     def __init__(self, controller: Controller):
         super().__init__(controller)
@@ -25,4 +26,15 @@ class MenuView(View):
         self.setLayout(main_layout)
         self.setVisible(True)
 
-    
+        self.__actualizarMenu(0)
+
+    def update(self, sender):
+        if isinstance(sender, Menu):
+            sender: Menu
+            self.__actualizarMenu(sender.getBoton())
+
+    def __actualizarMenu(self, botonActual: int):
+        for boton in self.__botones:
+            boton.setStyleSheet("background-color : white")
+
+        self.__botones[botonActual].setStyleSheet("background-color : yellow")
