@@ -6,7 +6,7 @@ from Subject import Subject
 from Window import Window
 
 
-class GameController(Controller):
+class MenuController(Controller):
     __input = None
 
     def __init__(self, menu: Menu):

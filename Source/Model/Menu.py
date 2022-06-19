@@ -6,7 +6,8 @@ class Menu(Subject):
     __cantBotones: int
 
     def __init__(self, cantBotones):
-        self.__cantBotones == cantBotones
+        super().__init__()
+        self.__cantBotones = cantBotones
 
     def botonSig(self):
         self.__boton = self.__boton + 1
