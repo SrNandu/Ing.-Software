@@ -13,6 +13,7 @@ class Game(Subject):
     __tuberias: list[tuple[Tuberia]] = []
     __cantTuberias: int = 10
     __relojFrames = pygame.time.Clock()
+    __puntaje: int = 0
 
     __ancho: int
     __alto: int
@@ -96,7 +97,12 @@ class Game(Subject):
                     self.__añadirParTuberias(
                         self.__tuberias[-1][0].getPosicion()[0])
 
-                
+                #actualizo el puntaje
+                if(Colisiones.atravesoTuberias(parTuberias, self.__pajaro)):
+                    self.__puntaje = self.__puntaje + 1
+
+            print(self.__puntaje)
+
             # Notifica que cambio el modelo
             self._notify(self.__getGameObjectsState())
 
