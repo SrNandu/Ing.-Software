@@ -1,4 +1,5 @@
 from concurrent.futures import thread
+from PuntajeService import PuntajeService
 from threading import Thread
 from Subject import Subject
 from Model.Colisiones import Colisiones
@@ -14,6 +15,8 @@ class Game(Subject):
     __tuberias: list[tuple[Tuberia]] = []
     __cantTuberias: int = 10
     __relojFrames = pygame.time.Clock()
+    __puntaje: int = 0
+    __puntajeService: PuntajeService = PuntajeService()
 
     __ancho: int
     __alto: int
@@ -116,6 +119,7 @@ class Game(Subject):
         """
         Game loop
         """
+        indice: int = 0
         while True:
             if not self.__pausado:
                 deltaTime = self.__relojFrames.get_time() / 1000
@@ -130,10 +134,18 @@ class Game(Subject):
                             self.__gameoverSignal.emit()
                             return
 
-                    if(Colisiones.parTuberiasAfuera(parTuberias)):
-                        self.__tuberias.remove(parTuberias)
-                        self.__añadirParTuberias(
-                            self.__tuberias[-1][0].getPosicion()[0])
+                if(Colisiones.parTuberiasAfuera(parTuberias)):
+                    self.__tuberias.remove(parTuberias)
+                    self.__añadirParTuberias(
+                        self.__tuberias[-1][0].getPosicion()[0])
+                    indice = indice-1
+
+                # actualizo el puntaje de manera media chota perdon nandu
+
+            if(Colisiones.atravesoTuberias(self.__tuberias[indice], self.__pajaro)):
+                self.__puntaje = self.__puntaje + 1
+                indice = indice + 1
+                self.__puntajeService.setPuntajeIfMax(self.__puntaje)
 
             # Notifica que cambio el modelo
             self._notify(self)
