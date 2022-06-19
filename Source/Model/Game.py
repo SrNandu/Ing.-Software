@@ -8,6 +8,7 @@ from Model.Tuberia import Tuberia
 import pygame
 import random
 from PyQt5.QtCore import pyqtSignal
+from Window import Window
 
 
 class Game(Subject):
@@ -25,12 +26,12 @@ class Game(Subject):
     __gameoverSignal: pyqtSignal = pyqtSignal()
     __gameover: bool = False
 
-    def __init__(self, ancho: int, alto: int):
+    def __init__(self):
         super().__init__()
         pygame.init()
 
-        self.__ancho = ancho
-        self.__alto = alto
+        self.__ancho = Window.getWidth()
+        self.__alto = Window.getHeight()
         self.__tuberias = self.__makeTuberias()
         self.__initPajaro()
 

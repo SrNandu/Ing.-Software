@@ -6,6 +6,7 @@ from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QWidget
+from Window import Window
 import cv2
 
 
@@ -18,10 +19,10 @@ class GameView(View):
     __font: pygame.font.Font
     __pauseText: Surface
 
-    def __init__(self, controller: Controller, ancho: int, alto: int):
+    def __init__(self, controller: Controller):
         super().__init__(controller)
 
-        self.__pausa = Surface((ancho, alto), pygame.SRCALPHA)
+        self.__pausa = Surface((Window.getWidth(), Window.getHeight()), pygame.SRCALPHA)
         self.__pausa.fill(Color(0, 0, 0, 130))
 
         self.__font = pygame.font.SysFont(None, 24)
