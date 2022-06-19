@@ -1,38 +1,39 @@
 from io import TextIOWrapper
 import os
-class PuntajeService: 
-    
+
+
+class PuntajeService:
+
     __puntajeMax: int = 0
-    __inputStrategy: None #Class ImputStrategy
+    __inputStrategy: str = "InputCabezaStrategy"
+
     def __init__(self):
         file: TextIOWrapper
-        if os.path.isfile('Textos/puntaje.txt'):
-            
-            with open("Textos/puntaje.txt","r") as file:
-                
-               __puntajeMax = int(file.read()) 
-                
-        else: 
-            file = open("Textos/puntaje.txt", "w")            
-            file.write("0")
-            __puntajeMax = int(file.read)
+        if os.path.isfile('puntaje.txt'):
+            with open("puntaje.txt", "r") as file:
+                self.__puntajeMax = int(file.readline())
+                self.__inputStrategy = file.readline()
 
+        else:
+            self.__escribirArchivo()
 
+    def setImputStrategy(self, inputStrategy):  # :ImputStategy
+        self.__inputStrategy = inputStrategy
+        self.__escribirArchivo()  
+
+    def setPuntajeIfMax(self, puntaje: int):
+        if(puntaje > self.__puntajeMax):
+            self.__puntajeMax = puntaje
+            self.__escribirArchivo()     
 
     def getImputStrategy(self):
         return self.__inputStrategy
 
-    def setImputStrategy(self, inputStrategy ):#:ImputStategy
-       self.__inputStrategy = inputStrategy
-
     def getPuntajeMax(self):
         return self.__puntajeMax
 
-    def setPuntajeIfMax(self, puntaje :int):
-        if(puntaje> self.__puntajeMax):
-            self.__setPuntajeMax(puntaje)  
-
-    def __setPuntajeMax(self, puntaje :int):
-        self.__puntajeMax = puntaje        
-        with open("Textos/puntaje.txt", "w") as file: 
-            file.write("Puntaje maximo:" + self.__puntajeMax)
+    def __escribirArchivo(self):
+        with open("puntaje.txt", "w") as file:
+            file.write(str(self.__puntajeMax))
+            file.write("\n")
+            file.write(self.__inputStrategy)
