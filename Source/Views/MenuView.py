@@ -1,11 +1,8 @@
-from importlib.metadata import SelectableGroups
-
-import PyQt5
 from Model.Menu import Menu
 from PuntajeService import PuntajeService
 from Views.View import View
 from Controllers.Controller import Controller
-from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel, QSizePolicy
+from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel
 from PyQt5.QtCore import *
 
 
