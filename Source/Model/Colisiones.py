@@ -80,6 +80,7 @@ class Colisiones:
         """
         posicionPajaro = pajaro.getPosicion()
         posicionTuberia = parTuberias[0].getPosicion()
+        
         if(posicionPajaro[0] > posicionTuberia[0]):
             return True
         else:
