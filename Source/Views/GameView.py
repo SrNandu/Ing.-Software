@@ -6,7 +6,7 @@ from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QWidget
-import cv2
+#import cv2
 
 
 class GameView(View):
