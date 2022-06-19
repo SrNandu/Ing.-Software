@@ -2,6 +2,9 @@ import pygame
 import sys
 import os
 
+from Source.Model.GameObject import GameObject
+from Source.Model.Tuberia import Tuberia
+
 # Nombre del directorio
 actual = os.path.dirname(os.path.realpath(__file__))
 
@@ -12,6 +15,15 @@ padre = os.path.dirname(actual)
 sys.path.append(padre)
 
 from Model.Colisiones import Colisiones
+import pytest
+
+@pytest.fixture
+def gameObject():
+    return GameObject(pygame.image.load("Sprites/bird.png"))
+
+@pytest.fixture
+def tuberia():
+    return Tuberia(pygame.image.load("Sprites/pipe.png"), False)
 
 def test_interseccionRectangulos_intersectanHorizontal():
     
@@ -29,5 +41,42 @@ def test_interseccionRectangulos_noIntersectanVertical():
     
     assert Colisiones._Colisiones__intersectanRectangulos([1,1],[1,2],[4,1],[1,2]) == False
 
-def test_Colisiona():
-    assert None
+def test_colisiona_colisionIzquierda(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,1)
+    tuberia.mover(40,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == True
+
+def test_colisiona_colisionDerecha(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(40,1)
+    tuberia.mover(1,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == True
+
+def test_colisiona_colisionArriba(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,40)
+    tuberia.mover(1,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == True
+
+def test_colisiona_colisionAbajo(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,1)
+    tuberia.mover(1,300)
+    assert Colisiones.colisiona(gameObject,tuberia) == True
+
+def test_colisiona_noColisionIzquierda(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,1)
+    tuberia.mover(60,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == False
+
+def test_colisiona_noColisionDerecha(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(60,1)
+    tuberia.mover(1,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == False
+
+def test_colisiona_noColisionArriba(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,60)
+    tuberia.mover(1,1)
+    assert Colisiones.colisiona(gameObject,tuberia) == False
+
+def test_colisiona_noColisionAbajo(gameObject : GameObject, tuberia : Tuberia):
+    gameObject.mover(1,1)
+    tuberia.mover(1,330)
+    assert Colisiones.colisiona(gameObject,tuberia) == False
