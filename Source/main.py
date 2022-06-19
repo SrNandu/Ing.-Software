@@ -1,18 +1,20 @@
-from time import sleep
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QMainWindow
-import sys
 from Model.Game import Game
+from Controllers.GameController import GameController
 from Views.GameView import GameView
+from Window import Window
+import sys
 
 app = QApplication(sys.argv)
-window = QMainWindow()
-window.setFixedWidth(600)
-window.setFixedHeight(500)
+Window.createWindow(600, 500)
 
 game = Game(600, 500)
-gameView = GameView(game, 600, 500)
-window.setCentralWidget(gameView)
+gameController = GameController(game, 1)
+gameView = GameView(gameController, 600, 500)
 
-window.show()
+game.suscribirse(gameView)
+game.start()
+
+Window.setViewActual(gameView)
+        
 app.exec_()

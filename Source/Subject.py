@@ -1,6 +1,7 @@
 from Observer import Observer
+from PyQt5.QtCore import QObject
 
-class Subject(object):
+class Subject(QObject):
     __observers: list[Observer] = []
     
     def suscribirse(self, observer: Observer):
@@ -9,6 +10,6 @@ class Subject(object):
     def desuscribirse(self, observer: Observer):
         self.__observers.remove(observer)
 
-    def _notify(self, mensaje):
+    def _notify(self, sender):
         for observer in self.__observers:
-            observer.update(mensaje)
+            observer.update(self)
