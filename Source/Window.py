@@ -23,3 +23,9 @@ class Window:
 
         Window.__stackedWidget.addWidget(view)
         Window.__stackedWidget.setCurrentWidget(view)  
+
+    def getWidth():
+        return Window.__window.width()
+
+    def getHeight():
+        return Window.__window.height()
