@@ -28,7 +28,7 @@ class Game(Subject):
 
         self.__ancho = ancho
         self.__alto = alto
-        self.__initTuberias()
+        self.__tuberias = self.__makeTuberias()
         self.__initPajaro()
 
     def start(self):
@@ -71,20 +71,24 @@ class Game(Subject):
         """
         self.__pajaro.mover(self.__ancho / 5, self.__alto / 2)
 
-    def __initTuberias(self):
+    def __makeTuberias(self) -> list[tuple[Tuberia]]:
         """
         Inicializar tuberias en posicion inicial
         """
+        tuberias: list[tuple[Tuberia]] = []
+
         for i in range(self.__cantTuberias):
             if i == 0:
                 # No hay tuberias entonces posicionar en la posicion de la primera tuberia
-                self.__añadirParTuberias(self.__ancho / 2)
+                tuberias.append(self.__makeParTuberias(self.__ancho / 2))
             else:
                 # Posicionar detras del ultimo par de tuberias
-                self.__añadirParTuberias(
-                    self.__tuberias[-1][0].getPosicion()[0])
+                tuberias.append(self.__makeParTuberias(
+                    tuberias[-1][0].getPosicion()[0]))
 
-    def __añadirParTuberias(self, x: int):
+        return tuberias
+
+    def __makeParTuberias(self, x: int) -> tuple[Tuberia]:
         """
         Añade un par de tuberias (una superior, otra inferior) al juego
 
@@ -106,7 +110,7 @@ class Game(Subject):
         # Posicionar tuberia superior
         tuberiaSuperior.posicionarTuberia(x, self.__alto, rand)
 
-        self.__tuberias.append((tuberiaInferior, tuberiaSuperior))
+        return (tuberiaInferior, tuberiaSuperior)
 
     def __gameLoop(self):
         """
