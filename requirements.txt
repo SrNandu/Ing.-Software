@@ -1,0 +1,11 @@
+pytest
+pytest-cov
+pygame
+pyqt5
+numpy
+scipy
+opencv-python
+imutils
+cmake
+dlib
+mediapipe
