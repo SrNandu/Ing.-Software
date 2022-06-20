@@ -10,6 +10,9 @@ class Subject(QObject):
     def desuscribirse(self, observer: Observer):
         self.__observers.remove(observer)
 
+    def desuscribirTodos(self):
+        self.__observers.clear()
+
     def _notify(self, sender):
         for observer in self.__observers:
             observer.update(self)

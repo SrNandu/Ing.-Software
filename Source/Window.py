@@ -11,6 +11,7 @@ class Window:
         Window.__window = QMainWindow()
         Window.__window.setFixedWidth(ancho)
         Window.__window.setFixedHeight(alto)
+        #Window.__window.showFullScreen()
 
         Window.__stackedWidget = QStackedWidget()
         Window.__window.setCentralWidget(Window.__stackedWidget)
@@ -23,3 +24,9 @@ class Window:
 
         Window.__stackedWidget.addWidget(view)
         Window.__stackedWidget.setCurrentWidget(view)  
+
+    def getWidth():
+        return Window.__window.width()
+
+    def getHeight():
+        return Window.__window.height()

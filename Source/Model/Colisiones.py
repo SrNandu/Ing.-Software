@@ -68,3 +68,20 @@ class Colisiones:
             return False
 
         return True
+
+    def atravesoTuberias(parTuberias: tuple[Tuberia], pajaro: GameObject ):
+        """
+        Determina si el pajaro atraviesa un par de tuberias
+
+        :param partuberias: una tupla de dos tuberias
+        :paran pajaro: Un GameObject representativo del pajaro
+
+        :return: True si atravieza o False si no
+        """
+        posicionPajaro = pajaro.getPosicion()
+        posicionTuberia = parTuberias[0].getPosicion()
+        
+        if(posicionPajaro[0] > posicionTuberia[0]):
+            return True
+        else:
+            return False            
