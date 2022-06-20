@@ -59,13 +59,8 @@ class GameView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        rect = QRect()
-        rect.setLeft(0)
-        rect.setTop(0)
-        rect.setRight(Window.getWidth())
-        rect.setBottom(Window.getHeight())
 
-        qp.drawImage(rect, self.__imagenGame)
+        qp.drawImage(0, 0, self.__imagenGame.scaled(Window.getWidth(), Window.getHeight()))
         qp.end()
 
     def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool):
@@ -75,26 +70,26 @@ class GameView(View):
         :param gameObjectsStates: Lista con tuplas con sprite y coordenadas de posicion del objecto (x,y)
         """
         # Dibujar fondo
-        #self.__gameSurface.blit(self.__fondo, (0, 0))
+        # self.__gameSurface.blit(self.__fondo, (0, 0))
 
         # Dibujar Camara de fondo
         if len(self.__camaraFrame):
-            camaraSurf = pygame.surfarray.make_surface(cv2.rotate(
+            camaraSurf=pygame.surfarray.make_surface(cv2.rotate(
                 self.__camaraFrame, cv2.ROTATE_90_COUNTERCLOCKWISE))
             self.__gameSurface.blit(camaraSurf, (0, 0))
 
         self.__gameSurface.blits(gameObjectsStates)
 
-        ancho = self.__gameSurface.get_width()
-        alto = self.__gameSurface.get_height()
+        ancho=self.__gameSurface.get_width()
+        alto=self.__gameSurface.get_height()
 
         if pausado:
             self.__gameSurface.blit(self.__pausa, (0, 0))
-            textRect = self.__pauseText.get_rect(
-                center=self.__gameSurface.get_rect().center)
+            textRect=self.__pauseText.get_rect(
+                center = self.__gameSurface.get_rect().center)
             self.__gameSurface.blit(self.__pauseText, textRect)
 
-        self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
+        self.__imagenGame=QtGui.QImage(self.__gameSurface.get_buffer().raw,
                                          ancho,
                                          alto,
                                          QtGui.QImage.Format.Format_RGB32)
