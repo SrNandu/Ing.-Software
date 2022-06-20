@@ -104,12 +104,12 @@ class Game(Subject):
         :param x: posicion donde se posiciona el par de tuberias
         """
         # Crear tuberia de abajo
-        tuberiaInferior = Tuberia(
-            pygame.image.load("Sprites/pipe.png"), False)
+        tuberiaInferiorSurface = pygame.transform.rotate(
+            pygame.image.load("Sprites/pipe.png"), 180)
+        tuberiaInferior = Tuberia(tuberiaInferiorSurface, False)
 
         # Crear tuberia de arriba
-        tuberiaSuperior = Tuberia(
-            pygame.image.load("Sprites/pipe.png"), True)
+        tuberiaSuperior = Tuberia(pygame.image.load("Sprites/pipe.png"), True)
 
         rand = random.randint(-100, 100)
 
