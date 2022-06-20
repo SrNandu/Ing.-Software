@@ -1,2 +1,2 @@
-14
+100
 InputManoStrategy
