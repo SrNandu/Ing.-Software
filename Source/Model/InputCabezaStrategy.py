@@ -23,3 +23,6 @@ class InputCabezaStrategy(InputStrategy):
             self._detectarAperturaBoca(shape)
 
             self._notify(self)
+            return shape
+
+        return []

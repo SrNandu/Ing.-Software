@@ -2,15 +2,20 @@ from Model.Menu import Menu
 from PuntajeService import PuntajeService
 from Views.View import View
 from Controllers.Controller import Controller
-from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel
+from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel, QWidget
 from PyQt5.QtCore import *
+from PyQt5 import QtGui
+from Model.Camara import Camara
+import numpy as np
 
 
 class MenuView(View):
     __botones: list[QPushButton] = []
     __puntajeText: QLabel
     __puintajeService: PuntajeService = PuntajeService()
-
+    __camara = Camara()
+    __camaraFrame: QtGui.QImage = QtGui.QImage()
+    
     def __init__(self, controller: Controller):
         super().__init__(controller)
 
@@ -35,14 +40,32 @@ class MenuView(View):
         self.setVisible(True)
 
         self.__actualizarMenu(0)
+        self.__camara.suscribirse(self)
 
     def update(self, sender):
         if isinstance(sender, Menu):
             sender: Menu
             self.__actualizarMenu(sender.getBoton())
+        if isinstance(sender, Camara):
+            sender: Camara
+            self.__renderCamara(sender.getFrame())
+
+    def paintEvent(self, event):
+        qp = QtGui.QPainter()
+        qp.begin(self)
+        qp.drawImage(0, 0, self.__camaraFrame)
+        qp.end()
 
     def __actualizarMenu(self, botonActual: int):
         for boton in self.__botones:
             boton.setStyleSheet("background-color : white")
 
         self.__botones[botonActual].setStyleSheet("background-color : yellow")
+
+    def __renderCamara(self, frame):
+        im_np = np.transpose(frame, (1, 0, 2)).copy()
+
+        self.__camaraFrame = QtGui.QImage(frame, frame.shape[1], frame.shape[0],
+                                        QtGui.QImage.Format_RGB888)
+        # Llama el paintEvent
+        QWidget.update(self)

@@ -13,6 +13,7 @@ Window.createWindow(1280, 720)
 camara = Camara()
 service = PuntajeService()
 camara.setInputStrategy(service.getImputStrategy())
+camara.start()
 
 #game = Game(600, 500)
 #gameController = GameController(game, 1)

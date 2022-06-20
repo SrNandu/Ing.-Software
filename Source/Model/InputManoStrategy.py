@@ -6,14 +6,18 @@ class InputManoStrategy(InputStrategy):
         super().__init__()
 
     def reconocer(self, frame):
-        caras = self.__detectorCara(frame, 0)
+        caras = self._detectorCara(frame, 0)
 
         for cara in caras:
             # determine the facial landmarks for the face region, then
             # convert the facial landmark (x, y)-coordinates to a NumPy
             # array
-            shape = self.__detectorPuntosCara(frame, cara)
+            shape = self._detectorPuntosCara(frame, cara)
             shape = face_utils.shape_to_np(shape)
 
-            self.__detectarGuiño(shape)
-            self.__detectarAperturaBoca(shape)
+            self._detectarGuiño(shape)
+            self._detectarAperturaBoca(shape)
+
+            return shape
+
+        return []
