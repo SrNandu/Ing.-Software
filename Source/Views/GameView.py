@@ -29,7 +29,7 @@ class GameView(View):
         self.__pauseText = self.__font.render(
             'PAUSA', True, Color(255, 255, 255))
 
-        self.__gameSurface = pygame.Surface((ancho, alto))
+        self.__gameSurface = pygame.Surface((Window.getWidth(), Window.getHeight()))
 
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
                                          self.__gameSurface.get_width(),

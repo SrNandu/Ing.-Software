@@ -1,4 +1,5 @@
 from Model.Game import Game
+from Model.InputStrategy import InputStrategy
 from Views.GameView import GameView
 from Controllers.GameController import GameController
 from Controllers.Controller import Controller
@@ -13,7 +14,21 @@ class MenuController(Controller):
         super().__init__(menu)
 
     def update(self, sender):
-        return super().update(sender)
+        if isinstance(sender, InputStrategy):
+            sender: InputStrategy
+            gesto = sender.getGesto()
+            if gesto == "Boca":
+                self._model.botonSig()
+            elif gesto == "BocaLargo":
+                self.__enter()
+
+    def __enter(self):
+        boton = self._model.getBoton()
+
+        if boton == 0:
+            self.__startGame()
+        else:
+            pass
 
     def __startGame(self):
         game = Game()

@@ -4,6 +4,7 @@ from imutils import face_utils
 import dlib
 import sys
 import os
+from PyQt5.QtCore import pyqtSignal
 
 # Nombre del directorio
 actual = os.path.dirname(os.path.realpath(__file__))
@@ -27,10 +28,12 @@ class InputStrategy(Subject):
     __bocaAbierta: bool = False
 
     _posicion: float = 0
-    __gesto: str
+    _gesto: str
 
     _detectorCara: None
     _detectorPuntosCara: None
+
+    _notifySignal: pyqtSignal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -38,9 +41,14 @@ class InputStrategy(Subject):
         self._detectorCara = dlib.get_frontal_face_detector()
         path = padre + '\\shape_predictor_68_face_landmarks.dat'
         self._detectorPuntosCara = dlib.shape_predictor(path)
+        
+        self._notifySignal.connect(self.__onMovimiento)
 
     def reconocer(self, frame):
         pass
+
+    def getGesto(self):
+        return self._gesto
 
     def _detectarAperturaBoca(self, puntosCara):
         aperturaBoca = self.__calcularAperturaBoca(puntosCara[60:68])
@@ -52,10 +60,10 @@ class InputStrategy(Subject):
         else:
             if self.__bocaAbierta:
                 if self.__bocaAbiertaFrames > self.BOCA_FRAMES * 3:
-                    self.__gesto = "BocaLargo"
+                    self._gesto = "BocaLargo"
                 else:
-                    self.__gesto = "Boca"
-                print(self.__gesto)
+                    self._gesto = "Boca"
+                print(self._gesto)
 
             self.__bocaAbierta = False
             self.__bocaAbiertaFrames = 0
@@ -67,3 +75,6 @@ class InputStrategy(Subject):
         H = dist.euclidean(boca[0], boca[4])
 
         return V / H
+
+    def __onMovimiento(self):
+        self._notify(self)

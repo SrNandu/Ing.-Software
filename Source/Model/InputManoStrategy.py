@@ -15,9 +15,10 @@ class InputManoStrategy(InputStrategy):
             shape = self._detectorPuntosCara(frame, cara)
             shape = face_utils.shape_to_np(shape)
 
-            self._detectarGuiño(shape)
+            self._gesto = ""
             self._detectarAperturaBoca(shape)
 
+            self._notifySignal.emit()
             return shape
 
         return []
