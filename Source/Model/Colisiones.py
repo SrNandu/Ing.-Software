@@ -36,7 +36,7 @@ class Colisiones:
         x = parTuberias[0].getPosicion()[0]
         ancho = parTuberias[0].getSprite().get_size()[0]
 
-        return x + ancho < 0
+        return (x + ancho < 0)
 
     def __intersectanRectangulos(p1: tuple, size1: tuple, p2: tuple, size2: tuple) -> bool:
         """
