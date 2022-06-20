@@ -64,7 +64,7 @@ class GameoverView(View):
         qp = QtGui.QPainter()
         qp.begin(self)
         qp.drawImage(0, 0, self.__camaraFrame.scaled(
-            Window.getWidth(), Window.getHeight())
+            Window.getWidth(), Window.getHeight()))
         qp.end()
 
     def __actualizarMenu(self, botonActual: int):
