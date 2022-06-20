@@ -1,5 +1,5 @@
 from Model.Game import Game
-import Controllers.MenuController as Menu_Controller
+from Controllers.GameoverController import GameoverController
 from Controllers.Controller import Controller
 from Subject import Subject
 from Window import Window
@@ -18,6 +18,6 @@ class GameController(Controller):
             sender: Game
             if sender.isGameOver():
                 menu = Menu(2)
-                menuController = Menu_Controller.MenuController(menu)
+                menuController = GameoverController(menu)
                 Window.setViewActual(GameoverView(
                     menuController, sender.getPuntaje()))
