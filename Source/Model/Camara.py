@@ -1,3 +1,4 @@
+from concurrent.futures import thread
 from threading import Thread
 from Model.InputStrategy import InputStrategy
 from Subject import Subject
@@ -8,6 +9,8 @@ import cv2
 
 class Camara(Subject):
     __inputStrategy: InputStrategy
+    __thread: Thread
+    __appAlive: bool = True
 
     # SINGLETON
     def __new__(cls):
@@ -16,8 +19,8 @@ class Camara(Subject):
         return cls.instance
 
     def start(self):
-        thread = Thread(target=self.__startReconocimiento)
-        thread.start()
+        self.__thread = Thread(target=self.__startReconocimiento)
+        self.__thread.start()
 
     def setInputStrategy(self, inputStrategy: InputStrategy):
         self.__inputStrategy = inputStrategy
@@ -25,7 +28,7 @@ class Camara(Subject):
     def __startReconocimiento(self):
         vs = VideoStream(src=0).start()
 
-        while True:
+        while self.__appAlive:
             self.__frame = vs.read()
             #self.__frame = imutils.resize(self.__frame, width=450)
 
@@ -35,3 +38,7 @@ class Camara(Subject):
 
     def getFrame(self):
         return self.__frame
+
+    def stop(self):
+        self.__appAlive = False
+        self.__thread.join()

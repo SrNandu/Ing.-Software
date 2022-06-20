@@ -18,7 +18,7 @@ service = PuntajeService()
 camara.setInputStrategy(service.getImputStrategy())
 camara.start()
 
-menu = Menu(3)
+menu = Menu(4)
 menuController = MenuController(menu)
 menuView = MenuView(menuController)
 
@@ -27,3 +27,5 @@ menu.suscribirse(menuView)
 Window.setViewActual(menuView)
         
 app.exec_()
+
+camara.stop()

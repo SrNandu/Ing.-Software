@@ -45,7 +45,7 @@ class GameoverController(Controller):
     def __volverMenu(self):
         self._model.desuscribirTodos()
         
-        menu = Menu(3)
+        menu = Menu(4)
         menuController = menu_Controller.MenuController(menu)
         menuView = MenuView(menuController)
 

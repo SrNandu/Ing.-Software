@@ -7,34 +7,46 @@ from PyQt5.QtCore import *
 from PyQt5 import QtGui
 from Model.Camara import Camara
 import numpy as np
+from Window import Window
 
 
 class MenuView(View):
     __botones: list[QPushButton] = []
     __puntajeText: QLabel
+    __instruccionesText: QLabel
     __puintajeService: PuntajeService = PuntajeService()
     __camara = Camara()
     __camaraFrame: QtGui.QImage = QtGui.QImage()
-    
+
     def __init__(self, controller: Controller):
         super().__init__(controller)
 
         self.__botones.append(QPushButton("Jugar"))
-        self.__botones.append(QPushButton("InputCabeza"))
-        self.__botones.append(QPushButton("InputMano"))
+        self.__botones.append(QPushButton("Jugar con Cabeza"))
+        self.__botones.append(QPushButton("Jugar con Mano"))
+        self.__botones.append(QPushButton("Salir"))
+
+        self.__instruccionesText = QLabel(
+            "Abrir boca por un tiempo para moverse en el menu.\nAbrir boca por un tiempo extendido = enter")
+        self.__instruccionesText.setAlignment(Qt.AlignLeft)
+        self.__instruccionesText.setStyleSheet("color : red; stroke: 10px")
 
         puntaje = str(self.__puintajeService.getPuntajeMax())
         self.__puntajeText = QLabel("Puntaje Máximo: " + puntaje)
-        self.__puntajeText.setAlignment(Qt.AlignHCenter)
+        self.__puntajeText.setAlignment(Qt.AlignRight)
+        self.__puntajeText.setStyleSheet("color : red; stroke: 10px")
+    
 
         main_layout = QGridLayout(self)
         main_layout.setHorizontalSpacing(15)
         main_layout.setVerticalSpacing(15)
 
         main_layout.addWidget(self.__botones[0], 0, 0, 1, 2)
-        main_layout.addWidget(self.__botones[1], 1, 1, 1, 1)
-        main_layout.addWidget(self.__botones[2], 1, 0, 1, 1)
-        main_layout.addWidget(self.__puntajeText, 2, 0, 1, 2)
+        main_layout.addWidget(self.__botones[2], 1, 1, 1, 1)
+        main_layout.addWidget(self.__botones[1], 1, 0, 1, 1)
+        main_layout.addWidget(self.__instruccionesText, 2, 0, 1, 1)
+        main_layout.addWidget(self.__puntajeText, 2, 1, 1, 1)
+        main_layout.addWidget(self.__botones[3], 3, 0, 1, 2)
 
         self.setLayout(main_layout)
         self.setVisible(True)
@@ -53,7 +65,8 @@ class MenuView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        qp.drawImage(0, 0, self.__camaraFrame)
+        qp.drawImage(0, 0, self.__camaraFrame.scaled(
+            Window.getWidth(), Window.getHeight()))
         qp.end()
 
     def __actualizarMenu(self, botonActual: int):
@@ -66,6 +79,6 @@ class MenuView(View):
         im_np = np.transpose(frame, (1, 0, 2)).copy()
 
         self.__camaraFrame = QtGui.QImage(frame, frame.shape[1], frame.shape[0],
-                                        QtGui.QImage.Format_RGB888)
+                                          QtGui.QImage.Format_RGB888)
         # Llama el paintEvent
         QWidget.update(self)

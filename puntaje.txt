@@ -1,2 +1,2 @@
-7
-InputCabezaStrategy
+3
+InputManoStrategy

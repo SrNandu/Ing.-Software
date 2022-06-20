@@ -7,10 +7,10 @@ from Model.Camara import Camara
 from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
-from PyQt5.QtCore import QRect
 from PyQt5.QtWidgets import QWidget
 from Window import Window
 import cv2
+from PuntajeService import PuntajeService
 
 
 class GameView(View):
@@ -21,10 +21,14 @@ class GameView(View):
     __pausa: Surface
     __font: pygame.font.Font
     __pauseText: Surface
+    __puntajeText: Surface
+    __puntajeMaxText: Surface
     __escaladoX: float
     __escaladoY: float
     __camara: Camara = Camara()
     __camaraFrame = np.array([])
+
+    __puntajeService = PuntajeService()
 
     def __init__(self, controller: Controller):
         super().__init__(controller)
@@ -34,6 +38,11 @@ class GameView(View):
         self.__pausa.fill(Color(0, 0, 0, 130))
 
         self.__font = pygame.font.SysFont(None, 24)
+        puntajeMax = str(self.__puntajeService.getPuntajeMax())
+        self.__puntajeMaxText = self.__font.render(
+            'PUNTAJE MAXIMO: ' + puntajeMax, True, Color(255, 255, 255))
+        self.__puntajeText = self.__font.render(
+            'PUNTAJE: 0', True, Color(255, 255, 255))
         self.__pauseText = self.__font.render(
             'PAUSA', True, Color(255, 255, 255))
 
@@ -51,7 +60,7 @@ class GameView(View):
         if isinstance(sender, Game):
             sender: Game
             self.__actualizarGame(
-                sender.getGameObjectsState(), sender.isPausado())
+                sender.getGameObjectsState(), sender.isPausado(), sender.getPuntaje())
 
         # Llama el paintEvent
         QWidget.update(self)
@@ -59,23 +68,19 @@ class GameView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        rect = QRect()
-        rect.setLeft(0)
-        rect.setTop(0)
-        rect.setRight(Window.getWidth())
-        rect.setBottom(Window.getHeight())
 
-        qp.drawImage(rect, self.__imagenGame)
+        qp.drawImage(0, 0, self.__imagenGame.scaled(
+            Window.getWidth(), Window.getHeight()))
         qp.end()
 
-    def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool):
+    def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool, puntaje: int):
         """
         Renderiza los sprites de los gameObjects en una imagen
 
         :param gameObjectsStates: Lista con tuplas con sprite y coordenadas de posicion del objecto (x,y)
         """
         # Dibujar fondo
-        #self.__gameSurface.blit(self.__fondo, (0, 0))
+        # self.__gameSurface.blit(self.__fondo, (0, 0))
 
         # Dibujar Camara de fondo
         if len(self.__camaraFrame):
@@ -87,6 +92,15 @@ class GameView(View):
 
         ancho = self.__gameSurface.get_width()
         alto = self.__gameSurface.get_height()
+
+        # Renderizar puntaje actual
+        self.__puntajeText = self.__font.render(
+            'PUNTAJE: '+str(puntaje), True, Color(255, 255, 255))
+        self.__gameSurface.blit(self.__puntajeText, (0, 0))
+        # Renderizar puntaje maximo
+        textRect = self.__puntajeMaxText.get_rect(
+                top=self.__puntajeText.get_height())
+        self.__gameSurface.blit(self.__puntajeMaxText, textRect)
 
         if pausado:
             self.__gameSurface.blit(self.__pausa, (0, 0))
