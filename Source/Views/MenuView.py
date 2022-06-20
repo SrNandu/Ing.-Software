@@ -13,6 +13,7 @@ from Window import Window
 class MenuView(View):
     __botones: list[QPushButton] = []
     __puntajeText: QLabel
+    __instruccionesText: QLabel
     __puintajeService: PuntajeService = PuntajeService()
     __camara = Camara()
     __camaraFrame: QtGui.QImage = QtGui.QImage()
@@ -25,9 +26,15 @@ class MenuView(View):
         self.__botones.append(QPushButton("InputMano"))
         self.__botones.append(QPushButton("Salir"))
 
+        self.__instruccionesText = QLabel(
+            "Abrir boca por un tiempo para moverse en el menu.\nAbrir boca por un tiempo extendido = enter")
+        self.__instruccionesText.setAlignment(Qt.AlignLeft)
+        self.__instruccionesText.setStyleSheet("color : white; stroke: 10px")
+
         puntaje = str(self.__puintajeService.getPuntajeMax())
         self.__puntajeText = QLabel("Puntaje Máximo: " + puntaje)
-        self.__puntajeText.setAlignment(Qt.AlignHCenter)
+        self.__puntajeText.setAlignment(Qt.AlignRight)
+        self.__puntajeText.setStyleSheet("color : white; stroke: 10px")
 
         main_layout = QGridLayout(self)
         main_layout.setHorizontalSpacing(15)
@@ -36,7 +43,8 @@ class MenuView(View):
         main_layout.addWidget(self.__botones[0], 0, 0, 1, 2)
         main_layout.addWidget(self.__botones[2], 1, 1, 1, 1)
         main_layout.addWidget(self.__botones[1], 1, 0, 1, 1)
-        main_layout.addWidget(self.__puntajeText, 2, 0, 1, 2)
+        main_layout.addWidget(self.__instruccionesText, 2, 0, 1, 1)
+        main_layout.addWidget(self.__puntajeText, 2, 1, 1, 1)
         main_layout.addWidget(self.__botones[3], 3, 0, 1, 2)
 
         self.setLayout(main_layout)
