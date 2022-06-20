@@ -30,8 +30,8 @@ class Game(Subject):
         super().__init__()
         pygame.init()
 
-        self.__ancho = Window.getWidth()
-        self.__alto = Window.getHeight()
+        self.__ancho = 640
+        self.__alto = 360
         self.__tuberias = self.__makeTuberias()
         self.__initPajaro()
 
@@ -68,6 +68,9 @@ class Game(Subject):
 
     def isPausado(self) -> bool:
         return self.__pausado
+
+    def getPuntaje(self) -> int:
+        return self.__puntaje
 
     def __initPajaro(self):
         """
@@ -137,8 +140,8 @@ class Game(Subject):
 
                 if(Colisiones.parTuberiasAfuera(parTuberias)):
                     self.__tuberias.remove(parTuberias)
-                    self.__añadirParTuberias(
-                        self.__tuberias[-1][0].getPosicion()[0])
+                    self.__tuberias.append(self.__makeParTuberias(
+                        self.__tuberias[-1][0].getPosicion()[0]))
                     indice = indice-1
 
                 # actualizo el puntaje de manera media chota perdon nandu

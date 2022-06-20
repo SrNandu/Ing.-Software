@@ -5,6 +5,7 @@ from Controllers.Controller import Controller
 from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
+from PyQt5.QtCore import QRect
 from PyQt5.QtWidgets import QWidget
 from Window import Window
 import cv2
@@ -18,18 +19,22 @@ class GameView(View):
     __pausa: Surface
     __font: pygame.font.Font
     __pauseText: Surface
+    __escaladoX: float
+    __escaladoY: float
 
     def __init__(self, controller: Controller):
         super().__init__(controller)
 
-        self.__pausa = Surface((Window.getWidth(), Window.getHeight()), pygame.SRCALPHA)
+        self.__pausa = Surface(
+            (640, 360), pygame.SRCALPHA)
         self.__pausa.fill(Color(0, 0, 0, 130))
 
         self.__font = pygame.font.SysFont(None, 24)
         self.__pauseText = self.__font.render(
             'PAUSA', True, Color(255, 255, 255))
 
-        self.__gameSurface = pygame.Surface((Window.getWidth(), Window.getHeight()))
+        self.__gameSurface = pygame.Surface(
+            (640, 360))
 
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
                                          self.__gameSurface.get_width(),
@@ -47,7 +52,13 @@ class GameView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        qp.drawImage(0, 0, self.__imagenGame)
+        rect = QRect()
+        rect.setLeft(0)
+        rect.setTop(0)
+        rect.setWidth(Window.getWidth())
+        rect.setHeight(Window.getHeight())
+
+        qp.drawImage(rect, self.__imagenGame)
         qp.end()
 
     def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool):
@@ -59,7 +70,6 @@ class GameView(View):
         # Dibujar fondo
         self.__gameSurface.blit(self.__fondo, (0, 0))
 
-        # Dibujar estado del game
         self.__gameSurface.blits(gameObjectsStates)
 
         ancho = self.__gameSurface.get_width()

@@ -15,13 +15,6 @@ service = PuntajeService()
 camara.setInputStrategy(service.getImputStrategy())
 camara.start()
 
-#game = Game(600, 500)
-#gameController = GameController(game, 1)
-#gameView = GameView(gameController, 600, 500)
-
-#game.suscribirse(gameView)
-#game.start()
-
 menu = Menu(3)
 menuController = MenuController(menu)
 menuView = MenuView(menuController)
