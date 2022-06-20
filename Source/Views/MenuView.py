@@ -22,19 +22,20 @@ class MenuView(View):
         super().__init__(controller)
 
         self.__botones.append(QPushButton("Jugar"))
-        self.__botones.append(QPushButton("InputCabeza"))
-        self.__botones.append(QPushButton("InputMano"))
+        self.__botones.append(QPushButton("Jugar con Cabeza"))
+        self.__botones.append(QPushButton("Jugar con Mano"))
         self.__botones.append(QPushButton("Salir"))
 
         self.__instruccionesText = QLabel(
             "Abrir boca por un tiempo para moverse en el menu.\nAbrir boca por un tiempo extendido = enter")
         self.__instruccionesText.setAlignment(Qt.AlignLeft)
-        self.__instruccionesText.setStyleSheet("color : white; stroke: 10px")
+        self.__instruccionesText.setStyleSheet("color : red; stroke: 10px")
 
         puntaje = str(self.__puintajeService.getPuntajeMax())
         self.__puntajeText = QLabel("Puntaje Máximo: " + puntaje)
         self.__puntajeText.setAlignment(Qt.AlignRight)
-        self.__puntajeText.setStyleSheet("color : white; stroke: 10px")
+        self.__puntajeText.setStyleSheet("color : red; stroke: 10px")
+    
 
         main_layout = QGridLayout(self)
         main_layout.setHorizontalSpacing(15)
