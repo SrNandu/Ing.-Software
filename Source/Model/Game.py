@@ -87,13 +87,14 @@ class Game(Subject):
         tuberias: list[tuple[Tuberia]] = []
 
         for i in range(self.__cantTuberias):
-            if i == 0:
-                # No hay tuberias entonces posicionar en la posicion de la primera tuberia
-                tuberias.append(self.__makeParTuberias(self.__ancho / 2))
-            else:
-                # Posicionar detras del ultimo par de tuberias
-                tuberias.append(self.__makeParTuberias(
-                    tuberias[-1][0].getPosicion()[0]))
+            # Posicionar detras del ultimo par de tuberias
+            ultimaTuberiaX = self.__ancho / 2
+            for parTuberias in tuberias:
+                tuberiaX = parTuberias[0].getPosicion()[0]
+                if tuberiaX > ultimaTuberiaX:
+                    ultimaTuberiaX = tuberiaX
+
+            tuberias.append(self.__makeParTuberias(ultimaTuberiaX))
 
         return tuberias
 
@@ -104,12 +105,12 @@ class Game(Subject):
         :param x: posicion donde se posiciona el par de tuberias
         """
         # Crear tuberia de abajo
-        tuberiaInferior = Tuberia(
-            pygame.image.load("Sprites/pipe.png"), False)
+        tuberiaInferiorSurface = pygame.transform.rotate(
+            pygame.image.load("Sprites/pipe.png"), 180)
+        tuberiaInferior = Tuberia(tuberiaInferiorSurface, False)
 
         # Crear tuberia de arriba
-        tuberiaSuperior = Tuberia(
-            pygame.image.load("Sprites/pipe.png"), True)
+        tuberiaSuperior = Tuberia(pygame.image.load("Sprites/pipe.png"), True)
 
         rand = random.randint(-100, 100)
 
@@ -140,11 +141,11 @@ class Game(Subject):
                             self.__gameoverSignal.emit()
                             return
 
-                if(Colisiones.parTuberiasAfuera(parTuberias)):
-                    self.__tuberias.remove(parTuberias)
-                    self.__tuberias.append(self.__makeParTuberias(
-                        self.__tuberias[-1][0].getPosicion()[0]))
-                    indice = indice-1
+                    if(Colisiones.parTuberiasAfuera(parTuberias)):
+                        self.__tuberias.remove(parTuberias)
+                        self.__tuberias.append(self.__makeParTuberias(
+                            self.__tuberias[-1][0].getPosicion()[0]))
+                        indice = indice-1
 
                 # actualizo el puntaje de manera media chota perdon nandu
 

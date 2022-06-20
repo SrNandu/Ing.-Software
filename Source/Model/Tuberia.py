@@ -5,11 +5,11 @@ from Model.GameObject import GameObject
 class Tuberia(GameObject):
     __superior: bool
     __espacioX: int = 150
-    __espacioY: int = 80
+    __espacioY: int = 60
 
     def __init__(self, sprite: Surface, superior: bool):
         super().__init__(sprite)
-        self.setVelocidad(-30, 0)
+        self.setVelocidad(-50, 0)
         self.__superior = superior
 
     def posicionarTuberia(self, tuberiaAnteriorX: int, altoVentana: int, random: int):
