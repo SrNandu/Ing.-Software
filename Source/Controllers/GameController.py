@@ -15,9 +15,13 @@ class GameController(Controller):
         super().__init__(game)
 
     def update(self, sender: Subject):
-        if isinstance(sender,InputStrategy):
+        if isinstance(sender, InputStrategy):
             sender: InputStrategy
             self._model.moverPajaro(sender.getPos())
+
+            gesto = sender.getGesto()
+            if gesto == "Boca" or gesto == "BocaLargo":
+                self._model.setPausa(not self._model.isPausado())
         if isinstance(sender, Game):
             sender: Game
             if sender.isGameOver():

@@ -46,11 +46,8 @@ class Game(Subject):
         self.__gameoverSignal.connect(self.__onGameover)
         gameLoopThread.start()
 
-    def pausar(self):
-        pausado = True
-
-    def despausar(self):
-        pausado = False
+    def setPausa(self, pausado: bool):
+        self.__pausado = pausado
 
     def getGameObjectsState(self) -> list[tuple[pygame.Surface, tuple[int, int]]]:
         """
@@ -74,7 +71,8 @@ class Game(Subject):
         return self.__puntaje
 
     def moverPajaro(self, posY):
-        self.__pajaro.mover(self.__pajaro.getPosicion()[0], posY)
+        if not self.__pausado:
+            self.__pajaro.mover(self.__pajaro.getPosicion()[0], posY)
 
     def __initPajaro(self):
         """
