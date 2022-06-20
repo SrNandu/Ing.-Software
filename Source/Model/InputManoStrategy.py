@@ -1,3 +1,4 @@
+import cv2
 from Model.InputStrategy import InputStrategy
 from imutils import face_utils
 
@@ -20,7 +21,12 @@ class InputManoStrategy(InputStrategy):
 
             #Nariz
             self._posicion = shape[29][1]
-            self._notifySignal.emit()
-            return shape
+
+            #Dibujar contorno boca
+            boca = cv2.convexHull(shape[60:68])
+            cv2.drawContours(frame, [boca], -1, (0, 255, 0), 1)
+
+
+        self._notifySignal.emit()
 
         return []

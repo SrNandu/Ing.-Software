@@ -30,11 +30,7 @@ class Camara(Subject):
             #self.__frame = imutils.resize(self.__frame, width=450)
             frameGray = cv2.cvtColor(self.__frame, cv2.COLOR_BGR2GRAY)
 
-            shape = self.__inputStrategy.reconocer(frameGray)
-
-            if len(shape) > 0:
-                boca = cv2.convexHull(shape[60:68])
-                cv2.drawContours(self.__frame, [boca], -1, (0, 255, 0), 1)
+            self.__frame = self.__inputStrategy.reconocer(frameGray)
 
             self._notify(self)
 
