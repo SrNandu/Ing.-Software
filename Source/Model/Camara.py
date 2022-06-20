@@ -28,16 +28,12 @@ class Camara(Subject):
         while True:
             self.__frame = vs.read()
             #self.__frame = imutils.resize(self.__frame, width=450)
-            #frameGray = cv2.cvtColor(self.__frame, cv2.COLOR_BGR2GRAY)
+            frameGray = cv2.cvtColor(self.__frame, cv2.COLOR_BGR2GRAY)
 
-            shape = self.__inputStrategy.reconocer(self.__frame)
+            shape = self.__inputStrategy.reconocer(frameGray)
 
             if len(shape) > 0:
-                ojoIzq = cv2.convexHull(shape[42:48])
-                ojoDer = cv2.convexHull(shape[36:42])
                 boca = cv2.convexHull(shape[60:68])
-                cv2.drawContours(self.__frame, [ojoIzq], -1, (0, 255, 0), 1)
-                cv2.drawContours(self.__frame, [ojoDer], -1, (0, 255, 0), 1)
                 cv2.drawContours(self.__frame, [boca], -1, (0, 255, 0), 1)
 
             self._notify(self)

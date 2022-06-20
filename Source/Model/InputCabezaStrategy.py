@@ -19,7 +19,6 @@ class InputCabezaStrategy(InputStrategy):
             #Usar punto de nariz
             self._posicion == shape[30][1] / 250
 
-            self._detectarGuiño(shape)
             self._detectarAperturaBoca(shape)
 
             self._notify(self)
