@@ -55,8 +55,8 @@ class GameView(View):
         rect = QRect()
         rect.setLeft(0)
         rect.setTop(0)
-        rect.setWidth(Window.getWidth())
-        rect.setHeight(Window.getHeight())
+        rect.setRight(Window.getWidth())
+        rect.setBottom(Window.getHeight())
 
         qp.drawImage(rect, self.__imagenGame)
         qp.end()
