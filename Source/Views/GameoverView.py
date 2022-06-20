@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel, QWidget
 from PyQt5.QtCore import *
 from PyQt5 import QtGui
 from PuntajeService import PuntajeService
+from Window import Window
 
 
 class GameoverView(View):
@@ -62,7 +63,8 @@ class GameoverView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        qp.drawImage(0, 0, self.__camaraFrame)
+        qp.drawImage(0, 0, self.__camaraFrame.scaled(
+            Window.getWidth(), Window.getHeight())
         qp.end()
 
     def __actualizarMenu(self, botonActual: int):
