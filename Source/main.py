@@ -4,16 +4,19 @@ from Model.Menu import Menu
 from Controllers.MenuController import MenuController
 from Window import Window
 import sys
+from PuntajeService import PuntajeService
+from Model.Camara import Camara
+import pygame
+
+pygame.init()
 
 app = QApplication(sys.argv)
-Window.createWindow(600, 500)
+Window.createWindow(1280, 720)
 
-#game = Game(600, 500)
-#gameController = GameController(game, 1)
-#gameView = GameView(gameController, 600, 500)
-
-#game.suscribirse(gameView)
-#game.start()
+camara = Camara()
+service = PuntajeService()
+camara.setInputStrategy(service.getImputStrategy())
+camara.start()
 
 menu = Menu(3)
 menuController = MenuController(menu)

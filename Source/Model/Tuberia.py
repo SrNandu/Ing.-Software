@@ -5,7 +5,7 @@ from Model.GameObject import GameObject
 class Tuberia(GameObject):
     __superior: bool
     __espacioX: int = 150
-    __espacioY: int = 60
+    __espacioY: int = 80
 
     def __init__(self, sprite: Surface, superior: bool):
         super().__init__(sprite)
