@@ -19,7 +19,7 @@ class Menu(Subject):
     def botonAnt(self):
         self.__boton = self.__boton - 1
         if self.__boton == -1:
-            self.__boton = self.__cantBotones
+            self.__boton = self.__cantBotones -1
 
         self._notify(self)
 

@@ -2,9 +2,6 @@ import pygame
 import sys
 import os
 
-from Source.Model.GameObject import GameObject
-from Source.Model.Tuberia import Tuberia
-
 # Nombre del directorio
 actual = os.path.dirname(os.path.realpath(__file__))
 
@@ -15,6 +12,8 @@ padre = os.path.dirname(actual)
 sys.path.append(padre)
 
 from Model.Colisiones import Colisiones
+from Model.GameObject import GameObject
+from Model.Tuberia import Tuberia
 import pytest
 
 @pytest.fixture
