@@ -14,14 +14,13 @@ padre = os.path.dirname(actual)
 
 class InputStrategy(Subject):
     OJO_UMBRAL = 0.3
-    OJO_FRAMES = 3
+    OJO_FRAMES = 5
 
-    BOCA_UMBRAL = 0.7
-    BOCA_FRAMES = 3
+    BOCA_UMBRAL = 0.45
+    BOCA_FRAMES = 10
 
     # Landmarks Ojos
     (oIStart, oIEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
-    (oDStart, oDEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
     __ojoIFrames: int = 0
     __ojoDFrames: int = 0
@@ -55,7 +54,8 @@ class InputStrategy(Subject):
         aperturaOjoDer = self.__calcularAperturaOjo(ojoDer)
 
         if aperturaOjoIzq < self.OJO_UMBRAL:
-            if self.__ojoIFrames > self.OJO_FRAMES and not self.__ojoICerrado:
+            self.__ojoIFrames = self.__ojoIFrames + 1
+            if self.__ojoIFrames > self.OJO_FRAMES and (not self.__ojoDCerrado and not self.__ojoICerrado):
                 self.__ojoICerrado = True
                 self.__gesto = "GiñoI"
                 print(self.__gesto)
@@ -64,7 +64,8 @@ class InputStrategy(Subject):
             self.__ojoIFrames = 0
 
         if aperturaOjoDer < self.OJO_UMBRAL:
-            if self.__ojoDFrames > self.OJO_FRAMES and not self.__ojoDCerrado:
+            self.__ojoDFrames = self.__ojoDFrames + 1
+            if self.__ojoDFrames > self.OJO_FRAMES and (not self.__ojoDCerrado and not self.__ojoICerrado):
                 self.__ojoDCerrado = True
                 self.__gesto = "GiñoD"
                 print(self.__gesto)
@@ -73,12 +74,13 @@ class InputStrategy(Subject):
             self.__ojoDFrames = 0
 
     def _detectarAperturaBoca(self, puntosCara):
-        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60:67])
+        aperturaBoca = self.__calcularAperturaBoca(puntosCara[60:68])
 
         if aperturaBoca > self.OJO_UMBRAL:
-            if self.__bocaAbiertaFrames > self.OJO_UMBRAL and not self.__bocaAbierta:
+            self.__bocaAbiertaFrames = self.__bocaAbiertaFrames + 1
+            if self.__bocaAbiertaFrames > self.BOCA_UMBRAL and not self.__bocaAbierta:
                 self.__bocaAbierta = True
-                self.__gesto = "GiñoI"
+                self.__gesto = "Boca"
                 print(self.__gesto)
         else:
             self.__bocaAbierta = False
