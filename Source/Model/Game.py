@@ -72,6 +72,9 @@ class Game(Subject):
     def getPuntaje(self) -> int:
         return self.__puntaje
 
+    def moverPajaro(self, posY):
+        self.__pajaro.mover(self.__pajaro.getPosicion()[0], posY)
+
     def __initPajaro(self):
         """
         Inicializar pajaro en la posicion inicial

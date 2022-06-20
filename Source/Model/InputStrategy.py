@@ -50,6 +50,9 @@ class InputStrategy(Subject):
     def getGesto(self):
         return self._gesto
 
+    def getPos(self):
+        return self._posicion
+
     def _detectarAperturaBoca(self, puntosCara):
         aperturaBoca = self.__calcularAperturaBoca(puntosCara[60:68])
 

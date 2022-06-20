@@ -18,6 +18,8 @@ class InputManoStrategy(InputStrategy):
             self._gesto = ""
             self._detectarAperturaBoca(shape)
 
+            #Nariz
+            self._posicion = shape[29][1]
             self._notifySignal.emit()
             return shape
 
