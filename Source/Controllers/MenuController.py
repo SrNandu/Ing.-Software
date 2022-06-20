@@ -34,11 +34,11 @@ class MenuController(Controller):
         if boton == 0:
             self.__startGame()
         elif boton == 1:
-            inputStrategy = InputManoStrategy()
+            inputStrategy = InputCabezaStrategy()
             self.__puntajeService.setImputStrategy(inputStrategy)
             Camara().setInputStrategy(inputStrategy)
         elif boton == 2:
-            inputStrategy = InputCabezaStrategy()
+            inputStrategy = InputManoStrategy()
             self.__puntajeService.setImputStrategy(inputStrategy)
             Camara().setInputStrategy(inputStrategy)
             

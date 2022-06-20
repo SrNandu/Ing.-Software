@@ -28,12 +28,10 @@ class Camara(Subject):
         while True:
             self.__frame = vs.read()
             #self.__frame = imutils.resize(self.__frame, width=450)
-            frameGray = cv2.cvtColor(self.__frame, cv2.COLOR_BGR2GRAY)
 
-            self.__frame = self.__inputStrategy.reconocer(frameGray)
+            self.__frame = self.__inputStrategy.reconocer(self.__frame)
 
             self._notify(self)
-
 
     def getFrame(self):
         return self.__frame
