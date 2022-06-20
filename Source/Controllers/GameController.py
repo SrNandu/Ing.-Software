@@ -17,6 +17,8 @@ class GameController(Controller):
         if isinstance(sender, Game):
             sender: Game
             if sender.isGameOver():
+                self._model.desuscribirTodos()
+
                 menu = Menu(2)
                 menuController = GameoverController(menu)
                 Window.setViewActual(GameoverView(

@@ -33,6 +33,8 @@ class GameoverController(Controller):
             self.__volverMenu()
 
     def __startGame(self):
+        self._model.desuscribirTodos()
+
         game = Game()
         gameView = GameView(game_Controller.GameController(game))
         Window.setViewActual(gameView)
@@ -41,6 +43,8 @@ class GameoverController(Controller):
         game.start()
         
     def __volverMenu(self):
+        self._model.desuscribirTodos()
+        
         menu = Menu(3)
         menuController = menu_Controller.MenuController(menu)
         menuView = MenuView(menuController)

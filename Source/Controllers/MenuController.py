@@ -1,3 +1,4 @@
+from attr import s
 from Model.Game import Game
 from Model.InputStrategy import InputStrategy
 from Views.GameView import GameView
@@ -31,6 +32,8 @@ class MenuController(Controller):
             pass
 
     def __startGame(self):
+        self._model.desuscribirTodos()
+
         game = Game()
         gameView = GameView(GameController(game))
         Window.setViewActual(gameView)
