@@ -19,6 +19,7 @@ class InputStrategy(Subject):
     __ojoDCerrado: bool = False
     __bocaAbierta:bool = False
 
+    __poscicion: float
     __gesto: str
 
     def __init__(self):
@@ -53,8 +54,6 @@ class InputStrategy(Subject):
             if self.__ojoDCerrado == True:
                 self.__gesto = "GiñoD"
 
-        self._notify(self)
-
     def __detectarAperturaBoca(self,puntosCara):
         aperturaBoca = self.__calcularAperturaBoca(puntosCara[60,67])
 
@@ -64,8 +63,6 @@ class InputStrategy(Subject):
             self.__bocaAbierta= False
             if self.__bocaAbierta == True:
                 self.__gesto = "Boca"
-
-        self._notify(self)
 
 
     def __calcularAperturaBoca(self,boca):
