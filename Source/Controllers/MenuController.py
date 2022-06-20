@@ -10,6 +10,7 @@ from Model.Menu import Menu
 from Window import Window
 from PuntajeService import PuntajeService
 from Model.Camara import Camara
+from PyQt5.QtWidgets import QApplication
 
 
 class MenuController(Controller):
@@ -41,6 +42,8 @@ class MenuController(Controller):
             inputStrategy = InputManoStrategy()
             self.__puntajeService.setImputStrategy(inputStrategy)
             Camara().setInputStrategy(inputStrategy)
+        elif boton == 3:
+            QApplication.quit()
             
     def __startGame(self):
         self._model.desuscribirTodos()
