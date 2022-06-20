@@ -38,7 +38,7 @@ class GameView(View):
             'PAUSA', True, Color(255, 255, 255))
 
         self.__gameSurface = pygame.Surface(
-            (640, 360))
+            (640, 360), pygame.SRCALPHA)
 
         self.__imagenGame = QtGui.QImage(self.__gameSurface.get_buffer().raw,
                                          self.__gameSurface.get_width(),
@@ -65,15 +65,15 @@ class GameView(View):
         rect.setRight(Window.getWidth())
         rect.setBottom(Window.getHeight())
 
-        qp.drawImage(rect, self.__imagenGame)
         qp.drawImage(0, 0, self.__camaraFrame)
+        qp.drawImage(rect, self.__imagenGame)
         qp.end()
 
     def __renderCamara(self, frame):
         im_np = np.transpose(frame, (1, 0, 2)).copy()
 
         self.__camaraFrame = QtGui.QImage(frame, frame.shape[1], frame.shape[0],
-                                        QtGui.QImage.Format_RGB888)
+                                          QtGui.QImage.Format_RGB888)
 
     def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool):
         """
@@ -82,7 +82,12 @@ class GameView(View):
         :param gameObjectsStates: Lista con tuplas con sprite y coordenadas de posicion del objecto (x,y)
         """
         # Dibujar fondo
-        self.__gameSurface.blit(self.__fondo, (0, 0))
+        #self.__gameSurface.blit(self.__fondo, (0, 0))
+
+        # Dibujar Camara de fondo
+        camaraSurf = pygame.surfarray.make_surface(cv2.rotate(
+            self.__camara.getFrame(), cv2.ROTATE_90_COUNTERCLOCKWISE))
+        self.__gameSurface.blit(camaraSurf, (0, 0))
 
         self.__gameSurface.blits(gameObjectsStates)
 
