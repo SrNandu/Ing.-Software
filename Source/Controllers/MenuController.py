@@ -1,15 +1,20 @@
 from attr import s
 from Model.Game import Game
 from Model.InputStrategy import InputStrategy
+from Model.InputCabezaStrategy import InputCabezaStrategy
+from Model.InputManoStrategy import InputManoStrategy
 from Views.GameView import GameView
 from Controllers.GameController import GameController
 from Controllers.Controller import Controller
 from Model.Menu import Menu
 from Window import Window
+from PuntajeService import PuntajeService
+from Model.Camara import Camara
 
 
 class MenuController(Controller):
     __input = None
+    __puntajeService = PuntajeService()
 
     def __init__(self, menu: Menu):
         super().__init__(menu)
@@ -28,9 +33,15 @@ class MenuController(Controller):
 
         if boton == 0:
             self.__startGame()
-        else:
-            pass
-
+        elif boton == 1:
+            inputStrategy = InputManoStrategy()
+            self.__puntajeService.setImputStrategy(inputStrategy)
+            Camara().setInputStrategy(inputStrategy)
+        elif boton == 2:
+            inputStrategy = InputCabezaStrategy()
+            self.__puntajeService.setImputStrategy(inputStrategy)
+            Camara().setInputStrategy(inputStrategy)
+            
     def __startGame(self):
         self._model.desuscribirTodos()
 
