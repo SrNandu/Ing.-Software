@@ -95,6 +95,9 @@ class Game(Subject):
                     self.__tuberias.remove(parTuberias)
                     self.__añadirParTuberias(
                         self.__tuberias[-1][0].getPosicion()[0])
+            
+            # Get frame
+            
 
             # Notifica que cambio el modelo
             self._notify(self.__getGameObjectsState())
