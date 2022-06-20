@@ -2,6 +2,7 @@ import cv2
 from Model.InputStrategy import InputStrategy
 from imutils import face_utils
 
+
 class InputCabezaStrategy(InputStrategy):
     def __init__(self):
         super().__init__()
@@ -20,8 +21,12 @@ class InputCabezaStrategy(InputStrategy):
             self._gesto = ""
             self._detectarAperturaBoca(shape)
 
-            #Nariz
+            # Nariz
             self._posicion = shape[29][1]
+
+            # Dibujar rectangulo cara
+            cv2.rectangle(frame, (cara.left(), cara.top()),
+                          (cara.right(), cara.bottom()), (255, 0, 0), 2)
 
             # Dibujar contorno boca
             boca = cv2.convexHull(shape[60:68])

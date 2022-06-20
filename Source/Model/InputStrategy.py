@@ -28,7 +28,7 @@ class InputStrategy(Subject):
     __bocaAbierta: bool = False
 
     _posicion: float = 0
-    _gesto: str
+    _gesto: str = ""
 
     _detectorCara: None
     _detectorPuntosCara: None
