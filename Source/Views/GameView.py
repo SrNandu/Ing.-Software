@@ -1,7 +1,9 @@
+import numpy as np
 import pygame
 from pygame import Color, Surface
 from Model.Game import Game
 from Controllers.Controller import Controller
+from Model.Camara import Camara
 from Views.View import View
 from Subject import Subject
 from PyQt5 import QtGui
@@ -21,6 +23,8 @@ class GameView(View):
     __pauseText: Surface
     __escaladoX: float
     __escaladoY: float
+    __camara: Camara = Camara()
+    __camaraFrame: QtGui.QImage = QtGui.QImage()
 
     def __init__(self, controller: Controller):
         super().__init__(controller)
@@ -41,6 +45,9 @@ class GameView(View):
                                          self.__gameSurface.get_height(), QtGui.QImage.Format.Format_RGB32)
 
     def update(self, sender: Subject):
+        if isinstance(sender, Camara):
+            sender: Camara
+            self.__renderCamara(sender.getFrame())
         if isinstance(sender, Game):
             sender: Game
             self.__actualizarGame(
@@ -59,7 +66,14 @@ class GameView(View):
         rect.setBottom(Window.getHeight())
 
         qp.drawImage(rect, self.__imagenGame)
+        qp.drawImage(0, 0, self.__camaraFrame)
         qp.end()
+
+    def __renderCamara(self, frame):
+        im_np = np.transpose(frame, (1, 0, 2)).copy()
+
+        self.__camaraFrame = QtGui.QImage(frame, frame.shape[1], frame.shape[0],
+                                        QtGui.QImage.Format_RGB888)
 
     def __actualizarGame(self, gameObjectsStates: list[tuple[Surface, tuple[int, int]]], pausado: bool):
         """
