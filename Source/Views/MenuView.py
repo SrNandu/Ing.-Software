@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtGui
 from Model.Camara import Camara
 import numpy as np
+from Window import Window
 
 
 class MenuView(View):
@@ -15,7 +16,7 @@ class MenuView(View):
     __puintajeService: PuntajeService = PuntajeService()
     __camara = Camara()
     __camaraFrame: QtGui.QImage = QtGui.QImage()
-    
+
     def __init__(self, controller: Controller):
         super().__init__(controller)
 
@@ -53,7 +54,8 @@ class MenuView(View):
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
-        qp.drawImage(0, 0, self.__camaraFrame)
+        qp.drawImage(0, 0, self.__camaraFrame.scaled(
+            Window.getWidth(), Window.getHeight()))
         qp.end()
 
     def __actualizarMenu(self, botonActual: int):
@@ -66,6 +68,6 @@ class MenuView(View):
         im_np = np.transpose(frame, (1, 0, 2)).copy()
 
         self.__camaraFrame = QtGui.QImage(frame, frame.shape[1], frame.shape[0],
-                                        QtGui.QImage.Format_RGB888)
+                                          QtGui.QImage.Format_RGB888)
         # Llama el paintEvent
         QWidget.update(self)
