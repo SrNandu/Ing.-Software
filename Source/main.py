@@ -6,6 +6,9 @@ from Window import Window
 import sys
 from PuntajeService import PuntajeService
 from Model.Camara import Camara
+import pygame
+
+pygame.init()
 
 app = QApplication(sys.argv)
 Window.createWindow(1280, 720)

@@ -15,7 +15,7 @@ class Game(Subject):
     __pajaro = GameObject(pygame.image.load("Sprites/bird.png"))
     __tuberias: list[tuple[Tuberia]] = []
     __cantTuberias: int = 10
-    __relojFrames = pygame.time.Clock()
+    __relojFrames: pygame.time.Clock
     __puntaje: int = 0
     __puntajeService: PuntajeService = PuntajeService()
 
@@ -28,12 +28,13 @@ class Game(Subject):
 
     def __init__(self):
         super().__init__()
-        pygame.init()
 
         self.__ancho = 640
         self.__alto = 360
         self.__tuberias = self.__makeTuberias()
         self.__initPajaro()
+
+        self.__relojFrames = pygame.time.Clock()
 
     def start(self):
         """
